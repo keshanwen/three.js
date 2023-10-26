@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body></body>
+</html>
+l
+<script type="module">
+  import * as THREE from "./three.js-r139/build/three.module.js";
+  /* 
+    创建3D场景对象 Scene
+  */
+  let scene = new THREE.Scene();
+
+  /* 创建网格模型 */
+  // 创建一个长方体的几何对象Geometry
+  let geometry = new THREE.BoxGeometry(100, 100, 100);
+  // 材质对象Material
+  let material = new THREE.MeshBasicMaterial({
+    color: 0x0000ff, //设置材质颜色
+  });
+  let mesh = new THREE.Mesh(geometry, material); // 网格模型对象Mesh
+  scene.add(mesh);
+</script>
