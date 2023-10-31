@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js中文网：http://www.webgl3d.cn/</title>
+    <script src="../../three.js-r139/build/three.js"></script>
+</head>
+
+<body>
+    <script>
+        //随便输入一个API，测试下是否已经正常引入three.js
+        console.log(THREE.Scene);
+        /**
+         * 创建3D场景对象Scene
+         */
+        var scene = new THREE.Scene();
+        /**
+         * 创建网格模型
+         */
+        //创建一个长方体几何对象Geometry
+        var geometry = new THREE.BoxGeometry(100, 100, 100);
+        //材质对象Material
+        var material = new THREE.MeshBasicMaterial({
+            color: 0x0000ff, //设置材质颜色
+        });
+        var mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+        scene.add(mesh); //网格模型添加到场景中 
+    </script>
+</body>
+
+</html>
