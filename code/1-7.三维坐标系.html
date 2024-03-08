@@ -23,10 +23,22 @@
   var geometry = new THREE.BoxGeometry(100, 100, 100);
   //材质对象Material
   var material = new THREE.MeshBasicMaterial({
-    color: 'blue', //设置材质颜色
+    color: 0x0000ff, //设置材质颜色
+    transparent: true,//开启透明
+    opacity: 0.5,//设置透明度
   });
   var mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
   scene.add(mesh); //网格模型添加到场景中
+
+  // 设置模型mesh的xyz的坐标
+  mesh.position.set(0,0,0)
+
+
+  // AxesHelper 辅助观察的坐标系
+  const axesHelper = new THREE.AxesHelper(150);
+  scene.add(axesHelper)
+
+
   // width和height用来设置Three.js输出的Canvas画布尺寸(像素px)
   var width = 800; //宽度
   var height = 500; //高度
@@ -36,7 +48,10 @@
   // 30:视场角度, width / height:Canvas画布宽高比, 1:近裁截面, 3000：远裁截面
   var camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
   camera.position.set(292, 223, 185); //相机在Three.js三维坐标系中的位置
+  // camera.position.set(-1000,0,0)
   camera.lookAt(0, 0, 0); //相机观察目标指向Three.js坐标系原点
+
+
   /**
    * 创建渲染器对象
    */
