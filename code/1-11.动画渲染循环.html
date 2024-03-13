@@ -79,24 +79,30 @@
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(width, height); //设置three.js渲染区域的尺寸(像素px)
     // renderer.render(scene, camera); //执行渲染操作
+
+  // 渲染函数
+    const clock = new THREE.Clock()
+    function render() {
+      const spt = clock.getDelta() * 1000
+      // console.log('两帧渲染时间间隔(毫秒)', spt);
+      // console.log('帧率FPS', 1000 / spt);
+      renderer.render(scene, camera)
+      mesh.rotateY(0.01)
+      requestAnimationFrame(render)
+    }
     render()
 
     //three.js执行渲染命令会输出一个canvas画布，也就是一个HTML元素，你可以插入到web页面中
     document.body.appendChild(renderer.domElement);
 
 
-    // 渲染函数
-    function render() {
-      renderer.render(scene, camera)
-      mesh.rotateY(0.01)
-      requestAnimationFrame(render)
-    }
+
 
     // 设置相机控件轨道控制器OrbitControls
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.addEventListener('change', function () {
+  /*   controls.addEventListener('change', function () {
       renderer.render(scene, camera); //执行渲染操作
-    });//监听鼠标、键盘事件
+    });//监听鼠标、键盘事件 */
 
   </script>
 </body>
