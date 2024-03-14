@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Three.js中文网：http://www.webgl3d.cn/</title>
+  <script src="../three.js-r139/build/three.js"></script>
+  <script src="../three.js-r139/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+
+    /*
+      const geometry = new THREE.BoxGeometry(100, 100, 100);
+      //材质对象Material
+      const material = new THREE.MeshLambertMaterial({
+          color: 0x00ffff, //设置材质颜色
+          transparent: true,//开启透明
+          opacity: 0.5,//设置透明度
+      });
+      for (let i = 0; i < 10; i++) {
+          const mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+          // 沿着x轴分布
+          mesh.position.set(i*200,0,0);
+          scene.add(mesh); //网格模型添加到场景中
+      }
+
+      //创建一个长方体几何对象Geometry
+      const geometry = new THREE.BoxGeometry(100, 100, 100);
+      //材质对象Material
+      const material = new THREE.MeshLambertMaterial({
+          color: 0x00ffff, //设置材质颜色
+          transparent: true,//开启透明
+          opacity: 0.5,//设置透明度
+      });
+      for (let i = 0; i < 10; i++) {
+          for (let j = 0; j < 10; j++) {
+              const mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+              // 在XOZ平面上分布
+              mesh.position.set(i * 200, 0, j * 200);
+              scene.add(mesh); //网格模型添加到场景中
+          }
+      }
+
+
+    */
+
+    /**
+     * 创建3D场景对象Scene
+     */
+    var scene = new THREE.Scene();
+    /**
+     * 创建网格模型
+     */
+    //创建一个长方体几何对象Geometry
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    //材质对象Material
+    var material = new THREE.MeshLambertMaterial({
+      color: 0x0000ff, //设置材质颜色
+      transparent: true,
+      opacity: 0.5
+    });
+  /*   var mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+    scene.add(mesh); //网格模型添加到场景中 */
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+          const mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+          // 沿着x轴分布
+          mesh.position.set(i * 20, 0, j * 20);
+          scene.add(mesh); //网格模型添加到场景中
+      }
+    }
+
+
+    /**
+     * 光源设置
+     */
+    //点光源
+    var pointLight = new THREE.PointLight(0xffffff, 1.0);
+    pointLight.position.set(400, 200, 300); //点光源位置
+    // pointLight.position.set(-400,-200,-300)
+    scene.add(pointLight); //点光源添加到场景中
+
+    //环境光: 没有特定方向，整体改变场景的光照明暗
+    // var ambient = new THREE.AmbientLight(0xffffff, 0.4);
+    // scene.add(ambient);
+
+    // 平行光
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
+    // 设置光源的方向： 通过光源 position 属性和目标指向对象的 position 属性计算
+    // directionalLight.position.set(80,100,50)
+    // 对比不同入射角，mesh表面对光照的反射效果
+    //  directionalLight.position.set(100, 0, 0);
+    // directionalLight.position.set(0, 100, 0);
+    // directionalLight.position.set(100, 100, 100);
+    // directionalLight.position.set(100, 60, 50);
+    //directionalLight.target默认指向坐标原点
+
+
+
+
+    // 方向光指向对象网格模型mesh, 可以不设置，默认位置是 0,0,0
+    // directionalLight.target = mesh
+    scene.add(directionalLight)
+
+    // 平行光辅助观察
+    const dirLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5, 0xff0000);
+    scene.add(dirLightHelper)
+
+
+
+    // width和height用来设置Three.js输出的Canvas画布尺寸(像素px)
+    // var width = 800; //宽度
+    // var height = 500; //高度
+    const width = window.innerWidth
+    const height = window.innerHeight
+
+    /*
+      const camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
+      // camera.position.set(292, 223, 185);
+      //在原来相机位置基础上拉远，可以观察到更大的范围
+      camera.position.set(800, 800, 800);
+      camera.lookAt(0, 0, 0);
+
+      // const camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
+      const camera = new THREE.PerspectiveCamera(30, width / height, 1, 8000);
+      // camera.position.set(292, 223, 185);
+      // 超出视锥体远裁界面的范围的会被剪裁掉，不渲染  可以调整far参数适配
+      camera.position.set(2000, 2000, 2000);
+      camera.lookAt(0, 0, 0);
+    */
+
+    /**
+     * 透视投影相机设置
+     */
+    // 30:视场角度, width / height:Canvas画布宽高比, 1:近裁截面, 3000：远裁截面
+    // var camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
+     const camera = new THREE.PerspectiveCamera(30, width / height, 1,8000)
+    camera.position.set(2000, 2000, 2000); //相机在Three.js三维坐标系中的位置
+    // camera.lookAt(0, 0, 0); //相机观察目标指向Three.js坐标系原点
+    camera.lookAt(1000, 0, 1000);
+    /**
+     * 创建渲染器对象
+     */
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height); //设置three.js渲染区域的尺寸(像素px)
+    // renderer.render(scene, camera); //执行渲染操作
+
+    // 渲染函数
+    const clock = new THREE.Clock()
+    function render() {
+      const spt = clock.getDelta() * 1000
+      // console.log('两帧渲染时间间隔(毫秒)', spt);
+      // console.log('帧率FPS', 1000 / spt);
+      renderer.render(scene, camera)
+      // mesh.rotateY(0.01)
+      // requestAnimationFrame(render)
+    }
+    render()
+
+    //three.js执行渲染命令会输出一个canvas画布，也就是一个HTML元素，你可以插入到web页面中
+    document.body.appendChild(renderer.domElement);
+
+
+
+
+    // 设置相机控件轨道控制器OrbitControls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    controls.target.set(1000, 0, 1000);
+      controls.update();//update()函数内会执行camera.lookAt(controls.targe)
+
+    controls.addEventListener('change', function () {
+      renderer.render(scene, camera); //执行渲染操作
+    });//监听鼠标、键盘事件
+
+    window.onresize = function () {
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      // 全屏情况下： 设置观察范围的长宽比 aspect 为窗口的宽高比
+      camera.aspect = window.innerWidth / window.innerHeight
+      // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
+      // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
+      // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
+      camera.updateProjectionMatrix();
+    }
+
+  </script>
+</body>
+
+</html>
