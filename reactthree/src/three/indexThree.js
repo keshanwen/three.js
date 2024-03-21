@@ -1,43 +1,93 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// 引入gui.js库
+import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
 
 
 
-// 三维场景
 const scene = new THREE.Scene();
-// 模型对象
+
 const geometry = new THREE.BoxGeometry(50, 50, 50);
 const material = new THREE.MeshBasicMaterial({
   color: 0x0000ff,
 });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
-// AxesHelper：辅助观察的坐标系
+
+// 辅助坐标系
 const axesHelper = new THREE.AxesHelper(250);
 scene.add(axesHelper);
-const width = window.innerWidth;
-const height = window.innerHeight;
-// const width = 400;
-// const height = 400;
 
-// 相机
+
+
+// 添加一个环境光
+const ambient = new THREE.AmbientLight(0xffffff, 0.9)
+scene.add(ambient)
+// 创建一个点光源
+const pointLight = new THREE.PointLight(0xffffff, 1.0)
+pointLight.position.set(0, 5, 0)
+scene.add(pointLight)
+
+// 相机设置
+const width = window.innerWidth;
+const height = window.innerHeight - 2;
 const camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
 camera.position.set(292, 223, 185);
 camera.lookAt(0, 0, 0);
-// WebGL渲染器
+
+// 渲染器
 const renderer = new THREE.WebGLRenderer();
+renderer.setClearColor(0x444444, 1); //设置背景颜色
 renderer.setSize(width, height);
-renderer.render(scene, camera);
-//three.js执行渲染命令会输出一个canvas画布(HTML元素)，你可以插入到web页面中
 
 
 
 document.body.appendChild(renderer.domElement);
 
-// 设置相机控件轨道控制器OrbitControls
+// 相机控件
 const controls = new OrbitControls(camera, renderer.domElement);
-// 如果OrbitControls改变了相机参数，重新调用渲染器渲染三维场景
-controls.addEventListener('change', function () {
-  renderer.render(scene, camera); //执行渲染操作
-});//监听鼠标、键盘事件
+
+
+
+/*
+  three.js 三维空间有很多参数，不是心算出来的，往往需要可视化方式调试出来的。
+*/
+
+// gui
+const gui = new GUI()
+
+const light = gui.addFolder('光源设置')
+light.close()
+light.add(ambient, 'intensity', 0, 2).name('环境光源').step(0.01)
+light.add(pointLight, 'intensity', 0, 5).name('点光源').step(0.01)
+
+const position = gui.addFolder('坐标位置')
+position.close()
+position.add(mesh.position, 'x', -100, 100)
+position.add(mesh.position, 'y', -100, 100)
+// gui.add(mesh.position, 'y', {
+//   left: -10,
+//   center: 0,
+//   right: 10
+// })
+position.add(mesh.position, 'z', -100, 100)
+
+const obj = {
+  color: 0x00fff,
+  bool: false
+}
+gui.addColor(obj, 'color').onChange(value => {
+  material.color.set(value)
+})
+gui.add(obj,'bool').name('控制旋转')
+
+
+function render() {
+  if (obj.bool) {
+    mesh.rotation.y += 0.05
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(render)
+}
+render()
 
