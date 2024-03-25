@@ -3,6 +3,8 @@ import * as THREE from 'three';
 // 引入Three.js扩展库
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+
+
 // width和height用来设置Three.js输出Canvas画布尺寸，同时用来辅助设置相机渲染范围
 var width = window.innerWidth; //窗口文档显示区的宽度
 var height = window.innerHeight; //窗口文档显示区的高度
@@ -29,6 +31,9 @@ renderer.setSize(width, height); //设置渲染区域尺寸
 // renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
 // renderer.domElement表示Three.js渲染结果,也就是一个HTML元素(Canvas画布)
 // document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+renderer.outputEncoding = THREE.sRGBEncoding;//解决加载gltf格式模型纹理贴图和原图不一样问题
+
+
 
 
 //创建控件对象  控件可以监听鼠标的变化，改变相机对象的属性

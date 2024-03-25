@@ -8,10 +8,14 @@ class Project extends React.Component {
     super()
   }
 
-  componentDidMount() {
-    console.log('componetDidMount')
+  showPhoto() {
     //Three.js渲染结果Canvas画布插入到body元素中
     document.body.appendChild(renderer.domElement);
+  }
+
+  componentDidMount() {
+    console.log('componetDidMount')
+    this.showPhoto()
   }
 
   render() {
