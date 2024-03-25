@@ -14,11 +14,11 @@ scene.add(model);//粮仓基地三维模型添加到场景中
 var directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
 directionalLight.position.set(400, 200, 300);
 scene.add(directionalLight);
-// 平行光2
+// // // 平行光2
 var directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.6);
 directionalLight2.position.set(-400, -200, -300);
 scene.add(directionalLight2);
-//环境光
+// // //环境光
 var ambient = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambient);
 
