@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+// import { model } from './model.js'
+
 
 
 /*
