@@ -23,6 +23,13 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
         }
     })
 
+    const group = gltf.scene.getObjectByName('平房仓')
+
+    // 批量更改所有平房仓颜色
+   /*  group.children.forEach((mesh) => {
+        mesh.material.color.set('red');
+    }) */
+
     //把gltf.scene中的所有模型添加到model组对象中
     model.add(gltf.scene);
 })
