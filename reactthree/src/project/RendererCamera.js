@@ -17,6 +17,7 @@ var s = 100;//根据你想要渲染的粮仓范围设置相机渲染范围大小
 //THREE.OrthographicCamera()创建一个正投影相机对象
 // -s * k, s * k, s, -s, 1, 1000定义了一个长方体渲染空间，渲染空间外的模型不会被渲染
 /*
+    THREE.OrthographicCamera()创建一个正投影相机对象
 
     left 摄像机视锥体左侧面
     right 摄像机视锥体右侧面
@@ -24,13 +25,26 @@ var s = 100;//根据你想要渲染的粮仓范围设置相机渲染范围大小
     bottom 摄像机视锥体下侧面
     near 摄像机视锥体近端面
     fear 摄像机视锥体远端面
+
+
+    PerspectiveCamera  模拟人眼所看到的景象，它是3D场景的渲染中使用得最普遍的投影模式。
+
+    fov 摄像机视锥体垂直视野角度
+    aspect 摄像机视锥体长宽比
+    near 摄像机视锥体近端面
+    far 摄像机视锥体远端面
+
 */
-var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
-// camera.position.set(200, 300, 200); camera.position.set(200, 300, 200); //相机在Three.js坐标系中的位置
-// camera.position.set(292, 223, 185);//通过相机控件OrbitControls旋转相机，选择一个合适场景渲染角度
-// camera.position.set(-258.1274265327985, 274.68297302722925, -164.7346229560638);
-// camera.position.set(272.82165581047525, 158.26659020839753, 264.0795913065541,);
-camera.position.set(272.82165581047525, 158.26659020839753, 264.0795913065541);
+// var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+// // camera.position.set(200, 300, 200); camera.position.set(200, 300, 200); //相机在Three.js坐标系中的位置
+// // camera.position.set(292, 223, 185);//通过相机控件OrbitControls旋转相机，选择一个合适场景渲染角度
+// // camera.position.set(-258.1274265327985, 274.68297302722925, -164.7346229560638);
+// // camera.position.set(272.82165581047525, 158.26659020839753, 264.0795913065541,);
+// camera.position.set(272.82165581047525, 158.26659020839753, 264.0795913065541);
+var camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000)
+camera.position.set(318, 162, 204);//通过相机控件OrbitControls旋转相机，选择一个合适场景渲染角度
+// camera.position.set(155.85506332113272,
+//     52.25468733357499, -75.58299000814472)
 
 camera.lookAt(0, 0, 0); //相机指向Three.js坐标系原点
 /**
