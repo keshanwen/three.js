@@ -12,7 +12,16 @@ var loader = new GLTFLoader(); //创建一个GLTF加载器
 loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一个对象
     // console.log('控制台查看gltf对象结构', gltf);
     //gltf.scene可以包含网格模型Mesh、光源Light等信息，至于gltf.scene是否包含光源，要看.gltf文件中是否有光源信息
-   // console.log('gltf对象场景属性', gltf.scene);
+    // console.log('gltf对象场景属性', gltf.scene);
+    gltf.scene.traverse((object) => {
+        if (object.type === 'Mesh') {
+            //  // MeshLambertMaterial：受光照影响   MeshBasicMaterial：不受光照影响
+            object.material = new THREE.MeshLambertMaterial({
+                map: object.material.map, // 获取原来材质的颜色贴图属性值
+                color: object.material.color // 读取原来材质的颜色
+            })
+        }
+    })
 
     //把gltf.scene中的所有模型添加到model组对象中
     model.add(gltf.scene);
