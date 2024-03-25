@@ -59,6 +59,7 @@ renderer.setSize(width, height); //设置渲染区域尺寸
 // renderer.domElement表示Three.js渲染结果,也就是一个HTML元素(Canvas画布)
 // document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
 renderer.outputEncoding = THREE.sRGBEncoding;//解决加载gltf格式模型纹理贴图和原图不一样问题
+renderer.setClearColor(0x005577, 1); // 渲染器设置three.js背景颜色 和雾化颜色相配
 
 
 

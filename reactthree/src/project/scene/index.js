@@ -7,6 +7,11 @@ import { model } from './model.js';
  */
 var scene = new THREE.Scene();
 scene.add(model);//粮仓基地三维模型添加到场景中
+
+
+// 设置雾化效果，雾的颜色和背景颜色相近，这样远处网格线和背景颜色融为一体
+scene.fog = new THREE.Fog(0x005577, -100, 1000);
+
 /**
 * 光源设置
 */
