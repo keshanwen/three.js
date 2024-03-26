@@ -1,4 +1,4 @@
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
+import { CSS3DRenderer, CSS3DObject, CSS3DSprite } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
 
 // 创建一个HTML标签
 function tag(name) {
@@ -7,7 +7,9 @@ function tag(name) {
   div.innerHTML = name;
   div.classList.add('tag');
   //div元素包装为CSS3模型对象CSS3DObject
-  var label = new CSS3DObject(div);
+  // var label = new CSS3DObject(div);
+  //div元素包装为CSS3模型对象CSS3DSprite
+  var label = new CSS3DSprite(div);
   div.style.pointerEvents = 'none';//避免HTML标签遮挡三维场景的鼠标事件
   // 设置HTML元素标签在three.js世界坐标中位置
   // label.position.set(x, y, z);
