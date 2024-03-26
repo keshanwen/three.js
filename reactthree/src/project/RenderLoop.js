@@ -1,7 +1,6 @@
 import { scene } from './scene/index.js'//Three.js三维场景
 import { renderer, camera } from './RendererCamera.js'//渲染器对象和相机对象
 import { labelRenderer } from './scene/tag.js' // HTML 标签相关代码
-import { choose } from './choose.js' // 执行射线拾取的代码
 
 
 // 渲染循环

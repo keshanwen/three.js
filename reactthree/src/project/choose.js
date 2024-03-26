@@ -2,11 +2,12 @@ import * as THREE from 'three'
 import { camera } from './RendererCamera'
 import { granaryArr } from './scene/model' // 获取所有粮仓模型对象的集合
 
-// 鼠标单击射线拾取meshArr中的某个国家Mesh
+// 鼠标单击射线拾取meshArr中的某个粮仓Mesh
 var chooseMesh = null
-function choose(event) {
+function choose(event, messageTag) {
   if (chooseMesh) {
     chooseMesh.material.color.set(0xffffff);// 把上次选中的mesh设置为原来的颜色
+    // label.element.style.visibility = 'hidden';//隐藏标签
   }
   var Sx = event.clientX; //鼠标单击位置横坐标
   var Sy = event.clientY; //鼠标单击位置纵坐标
@@ -27,8 +28,16 @@ function choose(event) {
   if (intersects.length > 0) {
     chooseMesh = intersects[0].object;
     chooseMesh.material.color.set(0x00ffff);//选中改变颜色，这样材质颜色贴图.map和color颜色会相乘
+    chooseMesh.point = intersects[0].point;
+  } else {
+    chooseMesh = null;
   }
 }
-document.addEventListener('click', choose); // 监听窗口鼠标单击事件,鼠标单击选中某个国家Mesh
+
+// document.addEventListener('click', choose); // 监听窗口鼠标单击事件,鼠标单击选中某个国家Mesh
 // addEventListener('mousemove', choose);//鼠标滑动事件
-export { choose }
+
+
+
+
+export { choose, chooseMesh }
