@@ -8,6 +8,7 @@ import { labelRenderer, tag } from './tag'
 
 var model = new THREE.Group();//声明一个组对象，用来添加加载成功的三维场景
 var loader = new GLTFLoader(); //创建一个GLTF加载器
+const granaryArr = [] // 所有粮仓模型对象的集合， export 导出用于射线的获取
 
 /* 注意，在引入该文件时,需要将该文件放在静态资源目录下，否则导入不成功 */
 loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一个对象
@@ -26,7 +27,7 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
 
     const group = gltf.scene.getObjectByName('粮仓')
 
-    group.traverse((obj) => {
+/*     group.traverse((obj) => {
         if (obj.type === 'Mesh') {
             const label = tag(obj.name)
             const pos = new THREE.Vector3()
@@ -42,11 +43,16 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
             label.position.copy(pos) // 标签标注在 obj 世界坐标
             model.add(label)
         }
-    })
+    }) */
     // 批量更改所有平房仓颜色
    /*  group.children.forEach((mesh) => {
         mesh.material.color.set('red');
     }) */
+    group.traverse((obj) => {
+        if (obj.type === 'Mesh') {
+            granaryArr.push(obj)
+        }
+    })
 
     //把gltf.scene中的所有模型添加到model组对象中
     // console.log(gltf.scene, 'scenc')
@@ -72,4 +78,4 @@ model.add(plane); */
 
 
 
-export {model}
+export {model, granaryArr}
