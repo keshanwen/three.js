@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 // 引入gltf模型加载库GLTFLoader.js
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { labelRenderer, tag } from './tag'
 
 
 
@@ -23,14 +24,32 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
         }
     })
 
-    const group = gltf.scene.getObjectByName('平房仓')
+    const group = gltf.scene.getObjectByName('粮仓')
 
+    group.traverse((obj) => {
+        if (obj.type === 'Mesh') {
+            const label = tag(obj.name)
+            const pos = new THREE.Vector3()
+            obj.getWorldPosition(pos) // 获取 obj 的世界坐标
+            const pName = obj.parent.name
+            if (pName === '立筒仓') {
+                pos.y += 36
+            } else if (pName === "浅圆仓") {
+                pos.y += 20
+            } else if (pName === "平房仓") {
+                pos.y += 17
+            }
+            label.position.copy(pos) // 标签标注在 obj 世界坐标
+            model.add(label)
+        }
+    })
     // 批量更改所有平房仓颜色
    /*  group.children.forEach((mesh) => {
         mesh.material.color.set('red');
     }) */
 
     //把gltf.scene中的所有模型添加到model组对象中
+    // console.log(gltf.scene, 'scenc')
     model.add(gltf.scene);
 })
 
