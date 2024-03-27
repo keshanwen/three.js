@@ -3,6 +3,7 @@ import * as THREE from 'three';
 // 引入gltf模型加载库GLTFLoader.js
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { labelRenderer, tag } from './tag'
+import { createFlame } from '../../three/components/flame'
 
 
 
@@ -57,6 +58,37 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
     //把gltf.scene中的所有模型添加到model组对象中
     // console.log(gltf.scene, 'scenc')
     model.add(gltf.scene);
+
+
+    function granaryFlame(name) {//name：粮仓名称编号
+        var granary = gltf.scene.getObjectByName(name);
+        var pos = new THREE.Vector3();
+        granary.getWorldPosition(pos);//获取粮仓granary世界坐标设置火焰位置
+        var flame = createFlame();//创建一个对象
+        flame.position.copy(pos);
+        if (granary.parent.name == "立筒仓") {
+            flame.position.y += 36;//加上粮仓顶部高度
+        } else if (granary.parent.name == "浅圆仓") {
+            flame.position.y += 20;
+        } else if (granary.parent.name == "平房仓") {
+            flame.position.y += 17;
+        }
+        flame.position.y += -4;//适当向下偏移
+        return flame;
+    }
+
+    const P_05Flame = granaryFlame('P_05')
+    model.add(P_05Flame)
+
+    setTimeout(() => {
+        P_05Flame.stop()
+        model.remove(P_05Flame)
+    }, 5000)
+
+    setTimeout(() => {
+        const Q_05Flame = granaryFlame('Q_05')
+        model.add(Q_05Flame)
+    }, 8000)
 })
 
 /* // 矩形纹理贴图测试
