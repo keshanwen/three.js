@@ -1,13 +1,14 @@
 import * as THREE from 'three'
 import { mesh } from './mesh'
-import { flame } from './flame'
+import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newMesh, testMesh, planeMesh, ballMesh, boxMesh } from '../study/BufferGeometry/index'
+
 
 /*
   创建场景对象 Scene
 */
 const scene = new THREE.Scene()
-scene.add(mesh)
-// scene.add(flame)
+// scene.add(mesh)
+scene.add(boxMesh)
 
 
 /*

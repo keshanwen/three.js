@@ -32,7 +32,7 @@ var ambient = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambient);
 
 // Three.js三维坐标轴 三个坐标轴颜色RGB分别对应xyz轴
-var axesHelper = new THREE.AxesHelper(250);
+ var axesHelper = new THREE.AxesHelper(250);
 scene.add(axesHelper);
 
 export { scene };

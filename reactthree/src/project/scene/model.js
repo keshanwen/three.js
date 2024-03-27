@@ -57,7 +57,7 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
 
     //把gltf.scene中的所有模型添加到model组对象中
     // console.log(gltf.scene, 'scenc')
-    model.add(gltf.scene);
+      model.add(gltf.scene);
 
 
     function granaryFlame(name) {//name：粮仓名称编号
@@ -80,15 +80,15 @@ loader.load("./scene/model.glb", function (gltf) {//gltf加载成功后返回一
     const P_05Flame = granaryFlame('P_05')
     model.add(P_05Flame)
 
-    setTimeout(() => {
-        P_05Flame.stop()
-        model.remove(P_05Flame)
-    }, 5000)
+    // setTimeout(() => {
+    //     P_05Flame.stop()
+    //     model.remove(P_05Flame)
+    // }, 5000)
 
-    setTimeout(() => {
-        const Q_05Flame = granaryFlame('Q_05')
-        model.add(Q_05Flame)
-    }, 8000)
+    // setTimeout(() => {
+    //     const Q_05Flame = granaryFlame('Q_05')
+    //     model.add(Q_05Flame)
+    // }, 8000)
 })
 
 /* // 矩形纹理贴图测试
