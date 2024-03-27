@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { mesh } from './mesh'
-
+import { flame } from './flame'
 
 /*
   创建场景对象 Scene
 */
 const scene = new THREE.Scene()
-scene.add(mesh)
+// scene.add(mesh)
+scene.add(flame)
 
 
 /*

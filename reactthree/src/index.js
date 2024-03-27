@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import './three/indexThree'
-// import './three/components/init'
-import Project from './project';
+import './three/components/init'
+// import Project from './project';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Project />
+    <App />
   </React.StrictMode>
 );
 
