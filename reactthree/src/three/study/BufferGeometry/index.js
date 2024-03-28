@@ -187,7 +187,7 @@ const boxMesh = new THREE.Mesh(boxGemo, materialS)
 // }
 // run(boxMesh.position.x)
 
-let x = 0
+/* let x = 0
 let setId = setInterval(() => {
   x += 10
   if (x >= 60) {
@@ -204,7 +204,7 @@ let setId = setInterval(() => {
   }
   console.log(x)
 
-},100)
+},100) */
 
 
 export {

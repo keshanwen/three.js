@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { mesh } from './mesh'
 import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newMesh, testMesh, planeMesh, ballMesh, boxMesh } from '../study/BufferGeometry/index'
+import { cube, mesh2, group } from '../study/modelObjectMaterial/index'
 
 
 /*
@@ -8,7 +9,9 @@ import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newM
 */
 const scene = new THREE.Scene()
 // scene.add(mesh)
-scene.add(boxMesh)
+// scene.add(cube)
+// scene.add(mesh2)
+scene.add(group)
 
 
 /*

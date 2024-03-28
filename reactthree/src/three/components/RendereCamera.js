@@ -16,6 +16,8 @@ const camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
 camera.position.set(200, 300, 200); //相机在Three.js坐标系中的位置
 camera.lookAt(0, 0, 0); //相机指向Three.js坐标系原点
 
+
+
 /**
  * 创建渲染器对象
  */
