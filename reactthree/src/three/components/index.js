@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { mesh } from './mesh'
-import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newMesh, testMesh, planeMesh, ballMesh, boxMesh } from '../study/BufferGeometry/index'
-import { cube, mesh2, group } from '../study/modelObjectMaterial/index'
+// import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newMesh, testMesh, planeMesh, ballMesh, boxMesh } from '../study/BufferGeometry/index'
+// import { cube, mesh2, group } from '../study/modelObjectMaterial/index'
+import { group } from '../study/leveModel/index'
 
 
 /*
@@ -33,5 +34,9 @@ scene.add(ambient);
 // Three.js三维坐标轴 三个坐标轴颜色RGB分别对应xyz轴
 const axesHelper = new THREE.AxesHelper(250);
 scene.add(axesHelper);
+
+
+
+console.log(scene.children)
 
 export { scene };
