@@ -37,6 +37,4 @@ scene.add(axesHelper);
 
 
 
-console.log(scene.children)
-
 export { scene };

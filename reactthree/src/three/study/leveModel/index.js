@@ -102,17 +102,32 @@ group.rotateY(Math.PI / 6)
 
 // mesh的世界坐标就是mesh.position与group.position的累加
 
-
+// 长方体的几何中心默认与本地坐标原点重合
 const geometry = new THREE.BoxGeometry(20, 20, 20)
+// 平移几何体的顶点坐标,改变几何体自身相对局部坐标原点的位置
+geometry.translate(0,10,0)
+
 const material = new THREE.MeshLambertMaterial({
   color: 0x00ffff
 })
 
 const mesh = new THREE.Mesh(geometry, material);
+const mesh1 = mesh.clone()
+const mesh2 = mesh.clone()
 mesh.position.set(50, 0, 0);
+mesh1.position.set(100, 0, 0);
 const group = new THREE.Group();
 group.add(mesh);
+group.add(mesh1)
+group.add(mesh2)
 group.position.set(50, 0, 0);
+
+/* function render() {
+  mesh.rotateY(0.01);//旋转动画
+  requestAnimationFrame(render);
+}
+render(); */
+
 
 // mesh.getWorldPosition(Vector3)读取一个模型的世界坐标，并把读取结果存储到参数Vector3中
 // 声明一个三维向量用来表示某个坐标
@@ -128,7 +143,16 @@ const meshAxesHelper = new THREE.AxesHelper(50);
 mesh.add(meshAxesHelper);
 
 
+console.log(group.children)
 
+setTimeout(() => {
+  // 注意:如果多个模型引用了同一个材质，如果该材质.visible设置为false，意味着隐藏绑定该材质的所有模型。
+  mesh.material.visible = false
+}, 2000)
+
+setTimeout(() => {
+ mesh.material.visible = true
+}, 3000)
 
 export {
   group,
