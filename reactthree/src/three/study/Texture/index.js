@@ -43,6 +43,8 @@ const textLoader = new THREE.TextureLoader()
 // const texture = textLoader.load('./火焰.png')
 const texture = textLoader.load('./Earth.png')
 
+texture.encoding = THREE.sRGBEncoding
+
 // 设置阵列模式
 // texture.wrapS = THREE.RepeatWrapping
 // texture.wrapT = THREE.RepeatWrapping
