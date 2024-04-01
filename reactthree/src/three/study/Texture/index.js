@@ -93,9 +93,9 @@ setTimeout(() => {
 
 
 // 设置U方向阵列模式
-texture.wrapS = THREE.RepeatWrapping;
+// texture.wrapS = THREE.RepeatWrapping;
 // uv两个方向纹理重复数量
-texture.repeat.x = 4;//注意选择合适的阵列数量
+// texture.repeat.x = 4;//注意选择合适的阵列数量
 
 // 渲染循环
 /* function render() {

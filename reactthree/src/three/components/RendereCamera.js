@@ -12,8 +12,11 @@ const s = 200  //控制相机渲染空间左右上下渲染范围，s越大，�
 
 //THREE.OrthographicCamera()创建一个正投影相机对象
 // -s * k, s * k, s, -s, 1, 1000定义了一个长方体渲染空间，渲染空间外的模型不会被渲染
-const camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
-camera.position.set(200, 300, 200); //相机在Three.js坐标系中的位置
+// const camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+const camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
+
+camera.position.set(200, 300, 600); //相机在Three.js坐标系中的位置
+// camera.position.set(40, 61, 122); //相机在Three.js坐标系中的位置
 camera.lookAt(0, 0, 0); //相机指向Three.js坐标系原点
 
 
@@ -37,4 +40,21 @@ renderer.setSize(width, height); //设置渲染区域尺寸
 // 平移：拖动鼠标右键
 const controls = new OrbitControls(camera, renderer.domElement);
 
-export { renderer, camera };
+/* controls.target.set(328, -98, -290)
+controls.update() */
+
+
+//解决加载gltf格式模型纹理贴图和原图不一样问题
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+/*
+  注意！！！！！！！最新版本属性名字有改变。渲染器属性名.outputEncoding已经变更为.outputColorSpace。
+  查WebGL渲染器文档，你可以看到.outputColorSpace的默认值就是SRGB颜色空间THREE.SRGBColorSpace，意味着新版本代码中，加载gltf，没有特殊需要，不设置.outputColorSpace也不会引起色差。
+
+  //新版本，加载gltf，不需要执行下面代码解决颜色偏差
+  renderer.outputColorSpace = THREE.SRGBColorSpace;//设置为SRGB颜色空间
+
+*/
+
+
+export { renderer, camera, controls };

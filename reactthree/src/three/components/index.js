@@ -3,7 +3,8 @@ import * as THREE from 'three'
 // import { points, line, closeLine, disContinuousLine, meshs, reactangleMesh, newMesh, testMesh, planeMesh, ballMesh, boxMesh } from '../study/BufferGeometry/index'
 // import { cube, mesh2, group } from '../study/modelObjectMaterial/index'
 // import { group } from '../study/leveModel/index'
-import { mesh } from '../study/Texture/index'
+// import { mesh } from '../study/Texture/index'
+import { group } from '../study/gltf/index'
 
 
 /*
@@ -14,7 +15,8 @@ const scene = new THREE.Scene()
 // scene.add(cube)
 // scene.add(mesh2)
 // scene.add(group)
-scene.add(mesh)
+// scene.add(mesh)
+scene.add(group)
 
 /*
   光源设置
