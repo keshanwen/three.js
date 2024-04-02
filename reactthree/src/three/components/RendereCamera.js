@@ -20,12 +20,15 @@ camera.position.set(200, 300, 600); //相机在Three.js坐标系中的位置
 camera.lookAt(0, 0, 0); //相机指向Three.js坐标系原点
 
 
+// camera.position.set(292, 223, 185);
 
 /**
  * 创建渲染器对象
  */
 const renderer = new THREE.WebGLRenderer({
   antialias: true, //开启锯齿
+  alpha: true,
+  logarithmicDepthBuffer: true // 设置对数深度缓冲区，优化深度冲突问题
 });
 renderer.setPixelRatio(window.devicePixelRatio);//设置设备像素比率,防止Canvas画布输出模糊。
 renderer.setSize(width, height); //设置渲染区域尺寸
@@ -55,6 +58,12 @@ renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.outputColorSpace = THREE.SRGBColorSpace;//设置为SRGB颜色空间
 
 */
+
+// 改变背景透明度值
+// renderer.setClearAlpha(1);
+
+ // renderer.setClearColor(0xb9d3ff, 0.4); //设置背景颜色和透明度
+
 
 
 export { renderer, camera, controls };

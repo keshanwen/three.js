@@ -13,9 +13,9 @@ loader.setPath('环境贴图/');
 var CubeTexture = loader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']);
 //材质对象Material
 var material = new THREE.MeshPhongMaterial({
-  metalness: 1.0,
-  roughness: 0.5,
-  envMapIntensity: 1,
+  // metalness: 1.0,
+  // roughness: 0.5,
+  // envMapIntensity: 1,
   envMap: CubeTexture, //设置环境贴图
   // 环境贴图反射率
   // reflectivity: 0.1,
