@@ -6,7 +6,8 @@ import * as THREE from 'three'
 // import { mesh } from '../study/Texture/index'
 // import { group } from '../study/gltf/index'
 // import { mesh } from '../study/PBR/index'
-import { mesh, mesh2 } from '../study/render/index'
+// import { mesh, mesh2 } from '../study/render/index'
+import { line } from '../study/curve/index'
 
 
 /*
@@ -18,8 +19,8 @@ const scene = new THREE.Scene()
 // scene.add(mesh2)
 // scene.add(group)
 // scene.add(mesh)
-scene.add(mesh)
-scene.add(mesh2)
+scene.add(line)
+
 
 /*
   光源设置
