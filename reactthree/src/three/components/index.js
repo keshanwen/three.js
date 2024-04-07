@@ -7,7 +7,7 @@ import * as THREE from 'three'
 // import { group } from '../study/gltf/index'
 // import { mesh } from '../study/PBR/index'
 // import { mesh, mesh2 } from '../study/render/index'
-import { line, point } from '../study/curve/index'
+import { line } from '../study/curve/index'
 
 
 /*
@@ -19,7 +19,8 @@ const scene = new THREE.Scene()
 // scene.add(mesh2)
 // scene.add(group)
 // scene.add(mesh)
-scene.add(point)
+scene.add(line)
+// scene.add(mesh)
 
 
 /*
