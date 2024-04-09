@@ -3,26 +3,34 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import Helper from './helper'
 
 
 class CreateThree {
-  constructor(width, height) {
-    this.init(width, height)
+  constructor(params = {}) {
+    const { logPosTargetBool, width, height, helperBool = true } = params
+    this.init(logPosTargetBool, width, height)
+    if (helperBool) {
+      this.helper = new Helper(this.scene, this.directionalLight);
+      this.gui = this.helper.gui;
+    }
+    // 循环渲染
+    this.renderer.setAnimationLoop(() => {
+      if (helperBool) {
+        this.helper.stats.update()
+      }
+      this.renderer.render(this.scene, this.camera)
+    })
   }
-  init(width,height) {
+  init(logPosTargetBool, width, height) {
     // 场景
     this.scene = new THREE.Scene();
     this.initWH(width,height)
     this.initCamera()
     this.initRenderer()
     this.initGLTF()
-    // 循环渲染
-    this.renderer.setAnimationLoop(() => {
-      this.renderer.render(this.scene, this.camera)
-    })
     this.initLight()
-    this.initControls()
-    this.initAxesHelper()
+    this.initControls(logPosTargetBool)
     this.initListener()
 
   }
@@ -58,15 +66,19 @@ class CreateThree {
     this.directionalLight.position.set(80, 100, 50);
     this.scene.add(this.directionalLight);
   }
-  initControls() {
+  initControls(logPosTargetBool) {
     // 相机控件
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
-  }
-  initAxesHelper() {
-    const axesHelper = new THREE.AxesHelper(200)
-    this.scene.add(axesHelper)
+    // 开发调试参数
+    if (logPosTargetBool) {
+      this.controls.addEventListener('change', () => {
+        console.log('camera.position', this.camera.position);
+        console.log('controls.target', this.controls.target);
+      })
+    }
+
   }
   initListener() {
      // 画布尺寸随着窗口变化
