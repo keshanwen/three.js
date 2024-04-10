@@ -11,7 +11,13 @@ class CreateThree {
     const { logPosTargetBool, width, height, helperBool = true } = params
     this.init(logPosTargetBool, width, height)
     if (helperBool) {
-      this.helper = new Helper(this.scene, this.directionalLight);
+      this.helper = new Helper({
+        scene: this.scene,
+        directionalLight: this.directionalLight,
+        camera: this.camera,
+        renderer: this.renderer,
+        controls: this.controls
+      });
       this.gui = this.helper.gui;
     }
     // 循环渲染

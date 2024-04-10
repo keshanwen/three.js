@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
+import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 
 
 export default class Helper {
-  constructor(scene, directionalLight) {
+  constructor(params) {
+    const { scene, directionalLight, camera, renderer, controls } = params
     scene.add(new THREE.AxesHelper(200));
 
     // 查看帧率
@@ -31,5 +33,19 @@ export default class Helper {
     }).name('照射角度');
 
     dirFolder.close();
+
+    this.dragControlsObjects = []
+    // 创建DragControls 实例
+    this.dragControls = new DragControls(this.dragControlsObjects,camera, renderer.domElement)
+
+    this.dragControls.addEventListener('dragstart', (e) => {
+      controls.enabled = false
+      console.log(e, 'dragStart~~~~~~')
+    })
+
+    this.dragControls.addEventListener('dragend', (e) => {
+      controls.enabled = true
+      console.log('dragEnd~~~~~~~',e)
+    })
   }
 }
