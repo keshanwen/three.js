@@ -16,17 +16,12 @@ class CreateThree {
         directionalLight: this.directionalLight,
         camera: this.camera,
         renderer: this.renderer,
-        controls: this.controls
+        controls: this.controls,
+        render: (helperBool) => this.render(helperBool)
       });
       this.gui = this.helper.gui;
     }
-    // 循环渲染
-    this.renderer.setAnimationLoop(() => {
-      if (helperBool) {
-        this.helper.stats.update()
-      }
-      this.renderer.render(this.scene, this.camera)
-    })
+    this.render(helperBool)
   }
   init(logPosTargetBool, width, height) {
     // 场景
@@ -95,7 +90,15 @@ class CreateThree {
       this.camera.updateProjectionMatrix();
     });
   }
-
+  render(helperBool) {
+    // 循环渲染
+    this.renderer.setAnimationLoop(() => {
+      if (helperBool) {
+        this.helper.stats.update()
+      }
+      this.renderer.render(this.scene, this.camera)
+    })
+  }
 }
 
 
