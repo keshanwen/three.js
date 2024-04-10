@@ -4,11 +4,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import Helper from './helper'
+import EffectComposerInstance from './EffectComposer ';
 
 
 class CreateThree {
   constructor(params = {}) {
-    const { logPosTargetBool, width, height, helperBool = true } = params
+    const { logPosTargetBool, width, height, helperBool = true, effectComposerBool = false } = params
+    this.effectComposerBool = effectComposerBool
     this.init(logPosTargetBool, width, height)
     if (helperBool) {
       this.helper = new Helper({
@@ -20,6 +22,15 @@ class CreateThree {
         render: (helperBool) => this.render(helperBool)
       });
       this.gui = this.helper.gui;
+    }
+    if (this.effectComposerBool) {
+      this.effectComposer = new EffectComposerInstance({
+        scene: this.scene,
+        camera: this.camera,
+        renderer: this.renderer,
+        width: this.width,
+        height: this.height
+      })
     }
     this.render(helperBool)
   }
@@ -50,9 +61,11 @@ class CreateThree {
       antialias: true,
       logarithmicDepthBuffer: true,
     });
+    // 设置设备像素比，避免canvas 画布输出模糊
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
     this.renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色和透明度
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
   }
   initGLTF() {
     // gltf加载
@@ -92,12 +105,24 @@ class CreateThree {
   }
   render(helperBool) {
     // 循环渲染
-    this.renderer.setAnimationLoop(() => {
+   /*  this.renderer.setAnimationLoop(() => {
       if (helperBool) {
         this.helper.stats.update()
       }
       this.renderer.render(this.scene, this.camera)
-    })
+    }) */
+
+    if (helperBool) {
+      this.helper.stats.update()
+    }
+
+    // 如果添加了后处理器，那么调用的 render 是后处理器的render
+    if (this.effectComposerBool) {
+      this.effectComposer.composer.render()
+    } else {
+      this.renderer.render(this.scene, this.camera)
+    }
+    window.requestAnimationFrame(() => this.render(helperBool))
   }
 }
 
