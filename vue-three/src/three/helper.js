@@ -8,7 +8,7 @@ import { TransformControls } from 'three/addons/controls/TransformControls.js';
 export default class Helper {
   constructor(params) {
     const { scene, directionalLight, camera, renderer, controls, render } = params
-    scene.add(new THREE.AxesHelper(200));
+   scene.add(new THREE.AxesHelper(200));
 
     // 查看帧率
     this.stats = new Stats();

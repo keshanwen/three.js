@@ -36,7 +36,7 @@ export default class EffectComposerInstance {
     // this.glitPass = new GlitchPass()
     // 设置glitPass 通道
     // this.composer.addPass(this.glitPass)
-    // this.setOutlineStyle()
+    this.setOutlineStyle()
 
     // 创建颜色较正通道
     const gammaPass = new ShaderPass(GammaCorrectionShader)
@@ -59,9 +59,9 @@ export default class EffectComposerInstance {
     //模型描边颜色，默认白色
      this.OutlinePass.visibleEdgeColor.set(0xcc3300);
     //高亮发光描边厚度
-     this.OutlinePass.edgeThickness = 4;
+     this.OutlinePass.edgeThickness = 6;
     //高亮描边发光强度
-    this.OutlinePass.edgeStrength = 6;
+    this.OutlinePass.edgeStrength = 10;
     //模型闪烁频率控制，默认0不闪烁
     this.OutlinePass.pulsePeriod = 2;
 

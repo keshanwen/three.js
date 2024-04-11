@@ -5,14 +5,17 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import Helper from './helper'
 import EffectComposerInstance from './EffectComposer ';
+import Ray from './Ray'
 
 
 class CreateThree {
   constructor(params = {}) {
-    const { logPosTargetBool, width, height, helperBool = true, effectComposerBool = false } = params
+    const { logPosTargetBool, width, height, helperBool = true, effectComposerBool = true, raycasterBool = true } = params
+    this.helperBool = helperBool
     this.effectComposerBool = effectComposerBool
+    this.raycasterBool = raycasterBool
     this.init(logPosTargetBool, width, height)
-    if (helperBool) {
+    if (this.helperBool) {
       this.helper = new Helper({
         scene: this.scene,
         directionalLight: this.directionalLight,
@@ -32,7 +35,18 @@ class CreateThree {
         height: this.height
       })
     }
+
     this.render(helperBool)
+    if (this.raycasterBool) {
+      const that = this
+      this.Ray = new Ray({
+        renderer: this.renderer,
+        width: this.width,
+        height: this.height,
+        camera: this.camera,
+        threeInstace: this
+      })
+    }
   }
   init(logPosTargetBool, width, height) {
     // 场景
@@ -64,7 +78,8 @@ class CreateThree {
     // 设置设备像素比，避免canvas 画布输出模糊
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色和透明度
+    // 0xb9d3ff
+    this.renderer.setClearColor(0x191970, 1); //设置背景颜色和透明度
     this.renderer.outputEncoding = THREE.sRGBEncoding;
   }
   initGLTF() {
