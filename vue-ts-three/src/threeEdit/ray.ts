@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 import type {
   CreateThreeInstanceType,
-  RayType,
+  RayInstanceType,
 } from '@/threeEdit/type/threeInstance';
+import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
 
-export default class Ray implements RayType {
-  intersectObjects: THREE.Object3D<THREE.Object3DEventMap>[];
+export default class Ray implements RayInstanceType {
+  intersectObjects: THREE.Object3D[];
 
   constructor(app: CreateThreeInstanceType) {
     this.intersectObjects = [];
@@ -37,26 +38,31 @@ export default class Ray implements RayType {
       const intersects = raycaster.intersectObjects(this.intersectObjects);
       // console.log("射线器返回的对象", intersects);
       // intersects.length大于0说明，说明选中了模型
-      console.log(intersects);
+      console.log('点中的对象',intersects);
       if (intersects.length > 0) {
         // 选中模型的第一个模型，设置为红色
         // intersects[0].object.material.color.set(0xff0000);
         //   instance.helper.transformControls.attach(gltf.scene)
         if (app.params.effectComposerBool) {
-          // app.effectComposer.OutlinePass.selectedObjects = [
-          //   intersects[0].object.ancestors,
-          // ];
-          // app.effectComposer?.outlinePass.selectedObjects = [intersects[0].object]
+
+          // app.effectComposer?.outlinePass.selectedObjects.push(
+          //   (intersects[0].object as Object3DHanlde).ancestors
+          // );
+          //  app.effectComposer?.outlinePass.selectedObjects = [
+          //    (intersects[0].object as Object3DHanlde).ancestors,
+          //  ];
         }
         // if (threeInstace.helperBool) {
         //   threeInstace.helper.transformControls.attach(intersects[0].object)
         // }
-        // threeInstace.effectComposer.OutlinePass.selectedObjects.push(intersects[0])
+        if (app.params.transformControlsBool) {
+          app.transformControls?.attach((intersects[0].object as Object3DHanlde).ancestors);
+        }
       }
     });
   }
 
-  push(object: THREE.Object3D<THREE.Object3DEventMap>): void {
+  push(object: THREE.Object3D): void {
     this.intersectObjects.push(object);
   }
 }

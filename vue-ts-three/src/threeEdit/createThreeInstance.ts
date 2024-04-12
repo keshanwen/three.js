@@ -1,17 +1,7 @@
 import * as THREE from 'three'
-import type { CreateThreeInstanceParamsType, CreateThreeInstanceType, HelperType, RayType,EffectComposerType } from '@/threeEdit/type/threeInstance'
-import type {
-  Scene,
-  Camera,
-  PerspectiveCamera as PerspectiveCameraType,
-  DirectionalLight,
-  WebGLRenderer,
-} from 'three';
+import type { CreateThreeInstanceParamsType, CreateThreeInstanceType, HelperInstanceType, RayInstanceType,EffectComposerInstanceType } from '@/threeEdit/type/threeInstance'
 import {
-  type GLTFLoader as GLTFLoaderType,
-  type OrbitControls as OrbitControlsType,
   TransformControls,
-  type EffectComposer,
 } from 'three/examples/jsm/Addons.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -22,16 +12,16 @@ import Ray from '@/threeEdit/ray'
 
 class CreateThree implements CreateThreeInstanceType {
   params: CreateThreeInstanceParamsType;
-  scene: Scene;
-  camera: PerspectiveCameraType;
-  renderer: WebGLRenderer;
-  GLTFLoader: GLTFLoaderType;
-  directionalLight: DirectionalLight;
-  orbitControls: OrbitControlsType;
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  renderer: THREE.WebGLRenderer;
+  GLTFLoader: GLTFLoader;
+  directionalLight: THREE.DirectionalLight;
+  orbitControls: OrbitControls;
   transformControls?: TransformControls | undefined;
-  helper?: HelperType | undefined;
-  effectComposer?: EffectComposerType | undefined;
-  ray?: RayType | undefined;
+  helper?: HelperInstanceType | undefined;
+  effectComposer?: EffectComposerInstanceType | undefined;
+  ray?: RayInstanceType | undefined;
 
   constructor(params: Partial<CreateThreeInstanceParamsType> = {}) {
     this.params = this.initParams(params);
@@ -41,12 +31,14 @@ class CreateThree implements CreateThreeInstanceType {
     this.GLTFLoader = this.initGLTFLoader();
     this.directionalLight = this.initLight();
     this.orbitControls = this.initOrbitControls();
-    this.initListener()
+    this.initListener();
     if (this.params.helperBool) this.helper = new Helper(this);
-    if (this.params.effectComposerBool) this.effectComposer = new EffectComposerInstance(this);
-    this.render()
-    if (this.params.raycasterBool)  this.ray = new Ray(this);
-    if (this.params.transformControlsBool) this.initTransformControls()
+    if (this.params.effectComposerBool)
+      this.effectComposer = new EffectComposerInstance(this);
+    this.render();
+    if (this.params.raycasterBool) this.ray = new Ray(this);
+    if (this.params.transformControlsBool)
+      this.transformControls = this.initTransformControls();
   }
   private initParams(
     params: Partial<CreateThreeInstanceParamsType>
@@ -62,18 +54,19 @@ class CreateThree implements CreateThreeInstanceType {
     };
     return Object.assign(defaultParams, params);
   }
-  private initCamera(): PerspectiveCameraType {
-    const camera: PerspectiveCameraType = new THREE.PerspectiveCamera(
+  private initCamera(): THREE.PerspectiveCamera {
+    const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
       45,
       this.params.width / this.params.height,
       0.1,
       3000
     );
 
+    camera.position.set(300, 150, 150);
     return camera;
   }
-  private initRender(): WebGLRenderer {
-    const renderer: WebGLRenderer = new THREE.WebGLRenderer({
+  private initRender(): THREE.WebGLRenderer {
+    const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
       antialias: true,
       logarithmicDepthBuffer: true,
     });
@@ -85,18 +78,18 @@ class CreateThree implements CreateThreeInstanceType {
     // renderer.outputEncoding = THREE.sRGBEncoding;
     return renderer;
   }
-  private initGLTFLoader(): GLTFLoaderType {
+  private initGLTFLoader(): GLTFLoader {
     // gltf加载
     const draco = new DRACOLoader();
     draco.setDecoderPath('./draco/');
-    const loader = new GLTFLoader();
+    const loader: GLTFLoader = new GLTFLoader();
     loader.setDRACOLoader(draco);
 
     return loader;
   }
-  private initLight(): DirectionalLight {
+  private initLight(): THREE.DirectionalLight {
     // 平行光
-    const directionalLight: DirectionalLight = new THREE.DirectionalLight(
+    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(
       0xffffff,
       3.0
     );
@@ -104,9 +97,9 @@ class CreateThree implements CreateThreeInstanceType {
     this.scene.add(directionalLight);
     return directionalLight;
   }
-  private initOrbitControls(): OrbitControlsType {
+  private initOrbitControls(): OrbitControls {
     // 相机控件
-    const orbitControls: OrbitControlsType = new OrbitControls(
+    const orbitControls: OrbitControls = new OrbitControls(
       this.camera,
       this.renderer.domElement
     );
@@ -123,8 +116,8 @@ class CreateThree implements CreateThreeInstanceType {
     return orbitControls;
   }
   private initWH() {
-    this.params.width = window.innerWidth - 4
-    this.params.height = window.innerHeight - 4
+    this.params.width = window.innerWidth - 4;
+    this.params.height = window.innerHeight - 4;
   }
   private initListener() {
     // 画布尺寸随着窗口变化
@@ -135,18 +128,20 @@ class CreateThree implements CreateThreeInstanceType {
       this.camera.updateProjectionMatrix();
     });
   }
-  private initTransformControls() {
-     this.transformControls = new TransformControls(
-       this.camera,
-       this.renderer.domElement
+  private initTransformControls(): TransformControls {
+    const transformControls: TransformControls = new TransformControls(
+      this.camera,
+      this.renderer.domElement
     );
-    this.scene.add(this.transformControls)
-    this.transformControls.addEventListener('mouseDown', () => {
-      this.orbitControls.enabled = false
+    this.scene.add(transformControls);
+    transformControls.addEventListener('mouseDown', () => {
+      this.orbitControls.enabled = false;
     });
-    this.transformControls.addEventListener('mouseUp', () => {
+    transformControls.addEventListener('mouseUp', () => {
       this.orbitControls.enabled = true;
     });
+
+    return transformControls;
   }
   private render() {
     if (this.params.helperBool) {
@@ -155,11 +150,11 @@ class CreateThree implements CreateThreeInstanceType {
 
     //  如果添加了后处理器，那么调用的 render 是后处理器的render
     if (this.params.effectComposerBool) {
-      this.effectComposer?.effectComposer.render()
+      this.effectComposer?.effectComposer.render();
     } else {
-      this.renderer.render(this.scene, this.camera)
+      this.renderer.render(this.scene, this.camera);
     }
-    window.requestAnimationFrame(() => this.render())
+    window.requestAnimationFrame(() => this.render());
   }
 }
 

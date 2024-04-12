@@ -1,12 +1,3 @@
-import type {
-  CreateThreeInstanceType,
-  EffectComposerType as EffectComposerInstanceType,
-} from '@/threeEdit/type/threeInstance';
-import type {
-  EffectComposer as EffectComposerType,
-  RenderPass as RenderPassType,
-  OutlinePass as OutlinePassType,
-} from 'three/examples/jsm/Addons.js';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 // 引入渲染器通道RenderPass
@@ -25,20 +16,24 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 // SMAA抗锯齿通道
 import { SMAAPass } from 'three/addons/postprocessing/SMAAPass.js';
+import type {
+  CreateThreeInstanceType,
+  EffectComposerInstanceType,
+} from '@/threeEdit/type/threeInstance';
 
 
 export default class EffectComposerInstance implements EffectComposerInstanceType {
   effectComposer: EffectComposer;
   renderPass: RenderPass;
   outlinePass: OutlinePass;
-  constructor(instance: CreateThreeInstanceType) {
+  constructor(app: CreateThreeInstanceType) {
     // 创建后期处理对象EffectComposer, WebGL 渲染器作为参数
-    this.effectComposer = new EffectComposer(instance.renderer);
-    this.renderPass = new RenderPass(instance.scene, instance.camera);
+    this.effectComposer = new EffectComposer(app.renderer);
+    this.renderPass = new RenderPass(app.scene, app.camera);
     this.effectComposer.addPass(this.renderPass);
     // outlinePass 的第一个参数v2 的尺寸和 canvas 画布保持一致
-    const v2 = new THREE.Vector2(instance.params.width, instance.params.height);
-    this.outlinePass = new OutlinePass(v2, instance.scene, instance.camera);
+    const v2 = new THREE.Vector2(app.params.width, app.params.height);
+    this.outlinePass = new OutlinePass(v2, app.scene, app.camera);
     // 设置 OutlinePss 通道
     this.effectComposer.addPass(this.outlinePass);
 
@@ -48,17 +43,17 @@ export default class EffectComposerInstance implements EffectComposerInstanceTyp
     const gammaPass = new ShaderPass(GammaCorrectionShader);
     this.effectComposer.addPass(gammaPass);
 
-    this.setPass(instance);
+    this.setPass(app);
   }
-  setPass(instance: CreateThreeInstanceType) {
+  setPass(app: CreateThreeInstanceType) {
     const FXAAPass = new ShaderPass(FXAAShader);
-    const pixelRatio = instance.renderer.getPixelRatio(); //获取设备像素比
+    const pixelRatio = app.renderer.getPixelRatio(); //获取设备像素比
     // width、height是canva画布的宽高度
     // FXAAPass.uniforms.resolution.value.x = 1 / (width * pixelRatio);
     // FXAAPass.uniforms.resolution.value.y = 1 / (height * pixelRatio);
     // this.composer.addPass(FXAAPass)
     // width、height是canva画布的宽高度
-    const smaaPass = new SMAAPass(instance.params.width * pixelRatio, instance.params.height * pixelRatio);
+    const smaaPass = new SMAAPass(app.params.width * pixelRatio, app.params.height * pixelRatio);
     this.effectComposer.addPass(smaaPass);
   }
   setOutlineStyle() {

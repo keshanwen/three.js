@@ -38,28 +38,32 @@ export interface CreateThreeInstanceType {
   directionalLight: DirectionalLight; // 光线
   orbitControls: OrbitControls; // 相机控件
   transformControls?: TransformControls; // 是否拖动模型
-  helper?: HelperType; // 开发调试工具
-  effectComposer?: EffectComposerType; // 后期处理通道
-  ray?: RayType; // 射线处理器
+  helper?: HelperInstanceType; // 开发调试工具
+  effectComposer?: EffectComposerInstanceType; // 后期处理通道
+  ray?: RayInstanceType; // 射线处理器
 }
 
 
-export interface HelperType {
+export interface HelperInstanceType {
   stats: Stats; // 查看帧率
   gui: GUI; // gui 调试
 }
 
 
-export interface EffectComposerType {
+export interface EffectComposerInstanceType {
   effectComposer: EffectComposer;
   renderPass: RenderPass;
   outlinePass: OutlinePass;
-  render(): void
+  render(): void;
 }
 
 
-export interface RayType {
+export interface RayInstanceType {
   intersectObjects: Object3D[];
-  push(object: Object3D): void
+  push(object: Object3D): void;
 }
 
+
+export type Object3DHanlde = {
+  ancestors: Object3D
+} & Object3D;
