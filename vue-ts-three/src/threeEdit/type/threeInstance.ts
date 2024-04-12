@@ -16,6 +16,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 // 引入OutlinePass通道
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+// 引入CSS2渲染器CSS2DRenderer
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 
 
 
@@ -27,6 +29,7 @@ export interface CreateThreeInstanceParamsType {
   effectComposerBool: boolean; // 后处理工具
   raycasterBool: boolean; // 射线模型
   transformControlsBool: boolean; // 是否拖动模型
+  sceneLabelBool: boolean; // 是否场景标注
 }
 
 export interface CreateThreeInstanceType {
@@ -41,7 +44,8 @@ export interface CreateThreeInstanceType {
   helper?: HelperInstanceType; // 开发调试工具
   effectComposer?: EffectComposerInstanceType; // 后期处理通道
   ray?: RayInstanceType; // 射线处理器
-  append(parent: HTMLElement): void // 插入到对应的父节点中
+  css2Renderer?: CSS2DRenderer; // 处理标签label
+  append(parent: HTMLElement): void; // 插入到对应的父节点中
 }
 
 

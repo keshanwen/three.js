@@ -3,11 +3,15 @@ import { ref,onMounted } from 'vue'
 import CreateThree from '@/threeEdit/createThreeInstance'
 import * as THREE from 'three'
 import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
+// 引入CSS2模型对象CSS2DObject
+import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
 
 const containerRef = ref()
 const app = new CreateThree({
   helperBool: true,
-  raycasterBool: true
+  raycasterBool: true,
+  sceneLabelBool: true
 })
 
 function initMode() {
@@ -74,25 +78,66 @@ function initMesh() {
   });
   const mesh = new THREE.Mesh(geometry, material)
   mesh.name = 'i am mesh'
-  mesh.position.set(0, 0, 100)
+  mesh.position.set(0, 0, 0)
+
+  const mesh2 = new THREE.Mesh(geometry, material)
+  const group = new THREE.Group()
+  group.position.set(100,0,0)
+  mesh2.position.set(0, 0, 100)
+  group.add(mesh2)
 
   mesh.traverse((obj: any) => {
     if (obj.isMesh) {
       obj.ancestors = mesh
     }
   })
+
+  mesh2.traverse((obj: any) => {
+    if (obj.isMesh) {
+      obj.ancestors = mesh2
+    }
+  })
   app.scene.add(mesh)
+  app.scene.add(group)
+  test(mesh2)
+  console.log(mesh2.position)
   if (app.params.raycasterBool) {
     app.ray!.push(mesh)
+    app.ray!.push(mesh2)
   }
 }
 
 
+function test(mesh?: Object3DHanlde | THREE.Object3D) {
+   // 创建 html 元素
+    const div = document.createElement('div');
+    div.innerHTML = '立方体';
+    div.style.padding = '10px';
+    div.style.color = '#fff';
+    div.style.backgroundColor = 'rgba(25,25,25,0.5)';
+    div.style.borderRadius = '5px';
+
+
+
+    // HTML元素转化为threejs的CSS2模型对象
+  const tag: CSS2DObject = new CSS2DObject(div);
+
+  if (mesh) {
+    tag.position.y += 40
+    mesh.add(tag)
+  } else {
+    tag.position.set(0, 0, 0);
+    app.scene.add(tag);
+  }
+}
+
 
   (function init() {
-    initMode()
+    // initMode()
     initMesh()
   })()
+
+
 
 
 

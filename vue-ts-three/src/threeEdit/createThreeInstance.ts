@@ -9,6 +9,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Helper from '@/threeEdit/helper';
 import EffectComposerInstance from '@/threeEdit/effectComposer'
 import Ray from '@/threeEdit/ray'
+// 引入CSS2渲染器CSS2DRenderer
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+// 引入CSS2模型对象CSS2DObject
+import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 class CreateThree implements CreateThreeInstanceType {
   params: CreateThreeInstanceParamsType;
@@ -22,6 +26,7 @@ class CreateThree implements CreateThreeInstanceType {
   helper?: HelperInstanceType | undefined;
   effectComposer?: EffectComposerInstanceType | undefined;
   ray?: RayInstanceType | undefined;
+  css2Renderer?: CSS2DRenderer | undefined;
 
   constructor(params: Partial<CreateThreeInstanceParamsType> = {}) {
     this.params = this.initParams(params);
@@ -39,6 +44,7 @@ class CreateThree implements CreateThreeInstanceType {
     if (this.params.raycasterBool) this.ray = new Ray(this);
     if (this.params.transformControlsBool)
       this.transformControls = this.initTransformControls();
+    if (this.params.sceneLabelBool) this.css2Renderer = this.initCSS2Renderer();
   }
   private initParams(
     params: Partial<CreateThreeInstanceParamsType>
@@ -51,6 +57,7 @@ class CreateThree implements CreateThreeInstanceType {
       effectComposerBool: false,
       raycasterBool: false,
       transformControlsBool: false,
+      sceneLabelBool: false,
     };
     return Object.assign(defaultParams, params);
   }
@@ -73,7 +80,7 @@ class CreateThree implements CreateThreeInstanceType {
     // 设置设备像素比，避免canvas 画布输出模糊
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.params.width, this.params.height);
-    // 0xb9d3ff
+    // 0xb9d3ff   66d3c0
     renderer.setClearColor(0x191970, 1); //设置背景颜色和透明度
     // renderer.outputEncoding = THREE.sRGBEncoding;
     return renderer;
@@ -124,6 +131,10 @@ class CreateThree implements CreateThreeInstanceType {
     window.addEventListener('resize', () => {
       this.initWH();
       this.renderer.setSize(this.params.width, this.params.height);
+      if (this.params.sceneLabelBool) {
+        // HTML标签css2Renderer.domElement尺寸重新设置
+        this.css2Renderer!.setSize(this.params.width, this.params.height);
+      }
       this.camera.aspect = this.params.width / this.params.height;
       this.camera.updateProjectionMatrix();
     });
@@ -148,6 +159,10 @@ class CreateThree implements CreateThreeInstanceType {
       this.helper?.stats.update();
     }
 
+    if (this.params.sceneLabelBool) {
+      this.css2Renderer?.render(this.scene, this.camera);
+    }
+
     //  如果添加了后处理器，那么调用的 render 是后处理器的render
     if (this.params.effectComposerBool) {
       this.effectComposer?.effectComposer.render();
@@ -157,9 +172,27 @@ class CreateThree implements CreateThreeInstanceType {
     window.requestAnimationFrame(() => this.render());
   }
   append(parent: HTMLElement): void {
-    parent.appendChild(this.renderer.domElement)
+    parent.appendChild(this.renderer.domElement);
+    if (this.params.sceneLabelBool) parent.appendChild(this.css2Renderer!.domElement);
+  }
+
+ private initCSS2Renderer() {
+    // 创建一个CSS2渲染器CSS2DRenderer
+    const css2Renderer = new CSS2DRenderer();
+
+    // width, height：canvas画布宽高度
+    css2Renderer.setSize(this.params.width, this.params.height);
+    css2Renderer.domElement.style.position = 'absolute';
+    // 避免renderer.domElement影响HTMl标签定位，设置top为0px
+    css2Renderer.domElement.style.top = '0px';
+    css2Renderer.domElement.style.left = '0px';
+    //设置.pointerEvents=none，以免模型标签HTML元素遮挡鼠标选择场景模型
+    css2Renderer.domElement.style.pointerEvents = 'none';
+
+    return css2Renderer
   }
 }
+
 
 
 export default CreateThree
