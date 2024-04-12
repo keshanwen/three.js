@@ -156,6 +156,9 @@ class CreateThree implements CreateThreeInstanceType {
     }
     window.requestAnimationFrame(() => this.render());
   }
+  append(parent: HTMLElement): void {
+    parent.appendChild(this.renderer.domElement)
+  }
 }
 
 

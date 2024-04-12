@@ -7,7 +7,7 @@ import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
 const containerRef = ref()
 const app = new CreateThree({
   helperBool: true,
-  raycasterBool: true,
+  raycasterBool: true
 })
 
 function initMode() {
@@ -98,7 +98,7 @@ function initMesh() {
 
 
 onMounted(() => {
-  containerRef.value.appendChild(app.renderer.domElement)
+  app.append(containerRef.value)
 })
 
 </script>

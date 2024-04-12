@@ -41,6 +41,7 @@ export interface CreateThreeInstanceType {
   helper?: HelperInstanceType; // 开发调试工具
   effectComposer?: EffectComposerInstanceType; // 后期处理通道
   ray?: RayInstanceType; // 射线处理器
+  append(parent: HTMLElement): void // 插入到对应的父节点中
 }
 
 
