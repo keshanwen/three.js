@@ -1,4 +1,3 @@
-// import * as THREE from 'three'
 import type {
   Scene,
   PerspectiveCamera,
@@ -18,6 +17,9 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 // 引入CSS2渲染器CSS2DRenderer
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
+
+
 
 
 
@@ -30,6 +32,7 @@ export interface CreateThreeInstanceParamsType {
   raycasterBool: boolean; // 射线模型
   transformControlsBool: boolean; // 是否拖动模型
   sceneLabelBool: boolean; // 是否场景标注
+  CSS3DRenderer: Boolean; // 是否三维展示
 }
 
 export interface CreateThreeInstanceType {
@@ -44,7 +47,7 @@ export interface CreateThreeInstanceType {
   helper?: HelperInstanceType; // 开发调试工具
   effectComposer?: EffectComposerInstanceType; // 后期处理通道
   ray?: RayInstanceType; // 射线处理器
-  css2Renderer?: CSS2DRenderer; // 处理标签label
+  sceneLabel?: SceneLableInstanceType; // 标签文本展示label
   append(parent: HTMLElement): void; // 插入到对应的父节点中
 }
 
@@ -65,10 +68,23 @@ export interface EffectComposerInstanceType {
 
 export interface RayInstanceType {
   intersectObjects: Object3D[];
+  chooseObj: undefined | null | Object3DHanlde;
+  tag?: undefined | Object3D;
   push(object: Object3D): void;
 }
 
 
 export type Object3DHanlde = {
-  ancestors: Object3D
+  ancestors: string
 } & Object3D;
+
+
+export interface SceneLableInstanceType {
+  css2Renderer?: CSS2DRenderer;
+  CSS3DRenderer?: CSS3DRenderer;
+  createShowTag(
+    content: string,
+    mesh: Object3DHanlde,
+    app: CreateThreeInstanceType
+  ): Object3D;
+}

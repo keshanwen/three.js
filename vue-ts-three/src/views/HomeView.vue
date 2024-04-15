@@ -2,26 +2,26 @@
 import { ref,onMounted } from 'vue'
 import CreateThree from '@/threeEdit/createThreeInstance'
 import * as THREE from 'three'
-import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
-// 引入CSS2模型对象CSS2DObject
-import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
 
 
 const containerRef = ref()
 const app = new CreateThree({
   helperBool: true,
   raycasterBool: true,
-  sceneLabelBool: true
+  sceneLabelBool: true,
+  effectComposerBool: true,
+  transformControlsBool: false
 })
 
 function initMode() {
   app.GLTFLoader.load('./finv/b.glb', (gltf) => {
     gltf.scene.position.set(100, 0, 60)
-    gltf.scene.name = 'bbb'
+    gltf.scene.name = '大楼'
 
     gltf.scene.traverse((obj: any) => {
       if (obj.isMesh) {
-        obj.ancestors = gltf.scene
+        obj.ancestors = gltf.scene.name
       }
     })
     app.scene.add(gltf.scene)
@@ -31,7 +31,7 @@ function initMode() {
     }
   })
 
-  app.GLTFLoader.load('./finv/c.glb', (gltf) => {
+/*   app.GLTFLoader.load('./finv/c.glb', (gltf) => {
     gltf.scene.position.set(120, 0, 0)
     gltf.scene.name = 'ccc'
 
@@ -44,9 +44,9 @@ function initMode() {
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene)
     }
-  })
+  }) */
 
-  app.GLTFLoader.load('./finv/d.glb', (gltf) => {
+ /*  app.GLTFLoader.load('./finv/d.glb', (gltf) => {
     gltf.scene.position.set(0, 0, 0)
     gltf.scene.name = 'ddd'
 
@@ -61,7 +61,7 @@ function initMode() {
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene)
     }
-  })
+  }) */
 
 }
 
@@ -71,13 +71,14 @@ function initMode() {
 
 function initMesh() {
   const geometry = new THREE.BoxGeometry(40, 40, 40);
+  const geometry1 = new THREE.BoxGeometry(40, 60, 40);
   const material = new THREE.MeshLambertMaterial({
       color: 0x00ffff, //设置材质颜色
       transparent: true,//开启透明
       // opacity: 0.5,//设置透明度
   });
-  const mesh = new THREE.Mesh(geometry, material)
-  mesh.name = 'i am mesh'
+  const mesh = new THREE.Mesh(geometry1, material)
+  mesh.name = '长方体'
   mesh.position.set(0, 0, 0)
 
   const mesh2 = new THREE.Mesh(geometry, material)
@@ -85,55 +86,66 @@ function initMesh() {
   group.position.set(100,0,0)
   mesh2.position.set(0, 0, 100)
   group.add(mesh2)
+  group.name = 'group1'
 
+
+  const mesh3 = new THREE.Mesh(geometry, material)
+  mesh3.name = '正方体'
+  mesh3.position.set(0, 0, 100)
+
+
+  let ballGeometry = new THREE.SphereGeometry(26, 26, 26)
+	const sphere = new THREE.Mesh(ballGeometry, material);
+  sphere.position.set(0, 0, -80)
+  sphere.name = '球'
+
+
+  // 挂载 名称name ，减小数据量
   mesh.traverse((obj: any) => {
     if (obj.isMesh) {
-      obj.ancestors = mesh
+      obj.ancestors = mesh.name
     }
   })
 
-  mesh2.traverse((obj: any) => {
+  group.traverse((obj: any) => {
     if (obj.isMesh) {
-      obj.ancestors = mesh2
+      obj.ancestors = group.name
     }
   })
+
+  mesh3.traverse((obj: any) => {
+    if (obj.isMesh) {
+      obj.ancestors = mesh3.name
+    }
+  })
+
+  sphere.traverse((obj: any) => {
+    if (obj.isMesh) {
+      obj.ancestors = sphere.name
+    }
+  })
+
+
+
   app.scene.add(mesh)
-  app.scene.add(group)
-  test(mesh2)
+  // app.scene.add(group)
+  app.scene.add(mesh3)
+  app.scene.add(sphere)
+
+//  test(mesh)
+  // test(mesh2)
   console.log(mesh2.position)
   if (app.params.raycasterBool) {
     app.ray!.push(mesh)
-    app.ray!.push(mesh2)
+    app.ray!.push(mesh3)
+    app.ray!.push(sphere)
   }
 }
 
-
-function test(mesh?: Object3DHanlde | THREE.Object3D) {
-   // 创建 html 元素
-    const div = document.createElement('div');
-    div.innerHTML = '立方体';
-    div.style.padding = '10px';
-    div.style.color = '#fff';
-    div.style.backgroundColor = 'rgba(25,25,25,0.5)';
-    div.style.borderRadius = '5px';
-
-
-
-    // HTML元素转化为threejs的CSS2模型对象
-  const tag: CSS2DObject = new CSS2DObject(div);
-
-  if (mesh) {
-    tag.position.y += 40
-    mesh.add(tag)
-  } else {
-    tag.position.set(0, 0, 0);
-    app.scene.add(tag);
-  }
-}
 
 
   (function init() {
-    // initMode()
+    initMode()
     initMesh()
   })()
 

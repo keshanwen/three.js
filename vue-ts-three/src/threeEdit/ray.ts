@@ -4,13 +4,19 @@ import type {
   RayInstanceType,
 } from '@/threeEdit/type/threeInstance';
 import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
+import { createSprite, createCanvasSprite } from '@/threeEdit/util/createBox';
+
 
 export default class Ray implements RayInstanceType {
   intersectObjects: THREE.Object3D[];
+  chooseObj: undefined | null | Object3DHanlde;
+  tag: THREE.Object3D | undefined;
 
   constructor(app: CreateThreeInstanceType) {
     this.intersectObjects = [];
-    this.listenerClick(app)
+    this.chooseObj = null;
+    this.tag = undefined;
+    this.listenerClick(app);
   }
 
   listenerClick(app: CreateThreeInstanceType) {
@@ -38,25 +44,39 @@ export default class Ray implements RayInstanceType {
       const intersects = raycaster.intersectObjects(this.intersectObjects);
       // console.log("射线器返回的对象", intersects);
       // intersects.length大于0说明，说明选中了模型
-      console.log('点中的对象',intersects);
+      console.log('点中的对象', intersects);
       if (intersects.length > 0) {
-        // 选中模型的第一个模型，设置为红色
-        // intersects[0].object.material.color.set(0xff0000);
-        //   instance.helper.transformControls.attach(gltf.scene)
-        if (app.params.effectComposerBool) {
-
-          // app.effectComposer?.outlinePass.selectedObjects.push(
-          //   (intersects[0].object as Object3DHanlde).ancestors
-          // );
-          //  app.effectComposer?.outlinePass.selectedObjects = [
-          //    (intersects[0].object as Object3DHanlde).ancestors,
-          //  ];
+        if (this.tag?.parent) {
+          this.tag.parent.remove(this.tag)
         }
-        // if (threeInstace.helperBool) {
-        //   threeInstace.helper.transformControls.attach(intersects[0].object)
-        // }
-        if (app.params.transformControlsBool) {
-          app.transformControls?.attach((intersects[0].object as Object3DHanlde).ancestors);
+        let ancestors: string = (intersects[0].object as Object3DHanlde)
+          .ancestors;
+        this.chooseObj = app.scene.getObjectByName(ancestors) as Object3DHanlde;
+        if (app.params.effectComposerBool && this.chooseObj) {
+          app.effectComposer!.outlinePass.selectedObjects = [this.chooseObj];
+        }
+        if (app.params.transformControlsBool && this.chooseObj) {
+          app.transformControls?.attach(this.chooseObj);
+        }
+        if (app.params.sceneLabelBool && this.chooseObj) {
+
+          if (ancestors === '球') {
+            this.tag = createSprite(this.chooseObj)
+            // this.tag = createCanvasSprite(this.chooseObj,'你好世界')
+          } else {
+               this.tag = app.sceneLabel!.createShowTag(
+                 ancestors,
+                 this.chooseObj,
+                 app
+               );
+          }
+
+          this.chooseObj.add(this.tag);
+        }
+      } else {
+        if (this.chooseObj) {
+          app.effectComposer!.outlinePass.selectedObjects = [];
+          if (this.tag) this.chooseObj.remove(this.tag)
         }
       }
     });
