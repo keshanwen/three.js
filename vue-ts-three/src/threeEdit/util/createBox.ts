@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type {
   Object3D,
 } from 'three';
+import TWEEN from '@tweenjs/tween.js';
 
 
 export function createBox(mesh: THREE.Object3D) {
@@ -117,4 +118,11 @@ export function createCanvasSprite(mesh: Object3D,name: string) {
    }
 
   return sprite
+}
+
+
+export function createTween(args: any) {
+  const tween = new TWEEN.Tween(args);
+
+  return tween;
 }
