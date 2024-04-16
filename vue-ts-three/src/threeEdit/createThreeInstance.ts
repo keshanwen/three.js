@@ -95,7 +95,7 @@ class CreateThree implements CreateThreeInstanceType {
   private initGLTFLoader(): GLTFLoader {
     // gltf加载
     const draco = new DRACOLoader();
-    draco.setDecoderPath('./draco/');
+    draco.setDecoderPath('http://localhost:1234/draco/');
     const loader: GLTFLoader = new GLTFLoader();
     loader.setDRACOLoader(draco);
 

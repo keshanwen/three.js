@@ -11,7 +11,7 @@ const app = new CreateThree({
 });
 
 function initMode() {
-  app.GLTFLoader.load('http://localhost:1234/d.glb', (gltf) => {
+  app.GLTFLoader.load('http://localhost:1234/b.glb', (gltf) => {
     gltf.scene.position.set(100, 0, 60);
     gltf.scene.name = '大楼';
 
