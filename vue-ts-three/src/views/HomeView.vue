@@ -4,60 +4,64 @@ import CreateThree from '@/threeEdit/createThreeInstance';
 import * as THREE from 'three';
 import { createTween } from '@/threeEdit/util/createBox';
 import TWEEN from '@tweenjs/tween.js';
+import { localParamsHook } from '@/threeEdit/localParams';
+import { auxOpeatorHook } from '@/threeEdit/auxOpeator'
+
+
+interface Position {
+   x: number,
+  y: number,
+  z: number
+}
+
+interface SeriesOption {
+  name: string
+  position: Position
+}
+
+interface Config {
+  series: SeriesOption[]
+}
+
+
+const config: Config = {
+  series: [
+    {
+      name: '科技_工业建筑_001',
+      position: {
+        x: 0,
+        y: 0,
+        z: 0
+      }
+    }
+  ]
+}
 
 const containerRef = ref();
 const app = new CreateThree({
   helperBool: true
 });
+const { setParams } = localParamsHook()
+const { rename,
+    singChildAncestors,
+    addInScene,
+    debuggerParams } = auxOpeatorHook(app)
+
 
 function initMode() {
-  app.GLTFLoader.load('http://localhost:1234/b.glb', (gltf) => {
-    gltf.scene.position.set(100, 0, 60);
-    gltf.scene.name = '大楼';
+  app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_001.glb', (gltf) => {
+    rename('科技_工业建筑_001', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
 
-    gltf.scene.traverse((obj: any) => {
-      if (obj.isMesh) {
-        obj.ancestors = gltf.scene.name;
-      }
-    });
-    app.scene.add(gltf.scene);
-
+    debuggerParams(gltf.scene)
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene);
     }
   });
-
-  /*   app.GLTFLoader.load('./finv/c.glb', (gltf) => {
-    gltf.scene.position.set(120, 0, 0)
-    gltf.scene.name = 'ccc'
-
-    gltf.scene.traverse((obj: any) => {
-      if (obj.isMesh) {
-        obj.ancestors = gltf.scene
-      }
-    })
-    app.scene.add(gltf.scene)
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene)
-    }
-  }) */
-
-  /*  app.GLTFLoader.load('./finv/d.glb', (gltf) => {
-    gltf.scene.position.set(0, 0, 0)
-    gltf.scene.name = 'ddd'
-
-    gltf.scene.traverse((obj: any) => {
-      if (obj.isMesh) {
-        obj.ancestors = gltf.scene
-      }
-    })
-
-    app.scene.add(gltf.scene)
-    // instance.helper.transformControls.attach(gltf.scene)
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene)
-    }
-  }) */
 }
 
 function initMesh() {
@@ -130,7 +134,7 @@ function initMesh() {
 
 (function init() {
   initMode();
-  initMesh();
+ // initMesh();
 })();
 
 

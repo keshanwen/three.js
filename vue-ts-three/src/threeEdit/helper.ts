@@ -26,9 +26,9 @@ export default class Helper implements HelperInstanceType {
   initGui(app: CreateThreeInstanceType): GUI {
     // 辅助调试
     const gui: GUI = new GUI();
-    //  gui.domElement.style.right = '0px';
-    //   gui.domElement.style.width = '500px';
-    //   gui.domElement.style.fontSize = '16px';
+    gui.domElement.style.right = '0px';
+    gui.domElement.style.width = '500px';
+    gui.domElement.style.fontSize = '20px';
     // 平行光调试
 
     const dirFolder = gui.addFolder('平行光'); //创建一个子菜单
