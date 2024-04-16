@@ -7,15 +7,11 @@ import TWEEN from '@tweenjs/tween.js';
 
 const containerRef = ref();
 const app = new CreateThree({
-  helperBool: true,
-  raycasterBool: true,
-  sceneLabelBool: true,
-  effectComposerBool: true,
-  transformControlsBool: false,
+  helperBool: true
 });
 
 function initMode() {
-  app.GLTFLoader.load('./finv/b.glb', (gltf) => {
+  app.GLTFLoader.load('http://localhost:1234/d.glb', (gltf) => {
     gltf.scene.position.set(100, 0, 60);
     gltf.scene.name = '大楼';
 
@@ -161,7 +157,7 @@ function animaltionRun() {
     loop();
   }, 2000);
 }
-animaltionRun();
+// animaltionRun();
 
 onMounted(() => {
   app.append(containerRef.value);
