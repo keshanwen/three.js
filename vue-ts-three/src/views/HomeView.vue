@@ -45,7 +45,8 @@ const app = new CreateThree({
 const { setParams } = localParamsHook()
 const { rename,
     singChildAncestors,
-    addInScene,
+  addInScene,
+    copyMesh,
     debuggerParams } = auxOpeatorHook(app)
 
 
@@ -58,21 +59,162 @@ function initMode() {
     singChildAncestors(gltf.scene)
     addInScene(gltf.scene)
 
-    debuggerParams(gltf.scene)
+      // debuggerParams(gltf.scene)
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene);
     }
   });
-   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_003.glb', (gltf) => {
+   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_005.glb', (gltf) => {
+    rename('科技_工业建筑_005', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
+
+    // debuggerParams(gltf.scene)
+    console.log(gltf.scene.rotation)
+    if (app.params.raycasterBool) {
+      app.ray?.push(gltf.scene);
+    }
+   });
+  app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_003.glb', (gltf) => {
     rename('科技_工业建筑_003', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
+
+
+    const mesh2 = copyMesh(gltf.scene)
+    rename('科技_工业建筑_003_02',mesh2)
+    setParams(mesh2, 'position.x')
+    setParams(mesh2, 'position.y')
+    setParams(mesh2, 'position.z')
+    singChildAncestors(mesh2)
+    addInScene(mesh2)
+
+    const mesh3 = copyMesh(gltf.scene)
+    rename('科技_工业建筑_003_03',mesh3)
+    setParams(mesh3, 'position.x')
+    setParams(mesh3, 'position.y')
+    setParams(mesh3, 'position.z')
+    singChildAncestors(mesh3)
+    addInScene(mesh3)
+
+    // debuggerParams(mesh3)
+
+
+
+    if (app.params.raycasterBool) {
+      app.ray?.push(gltf.scene);
+      app.ray?.push(mesh2);
+      app.ray?.push(mesh3);
+    }
+  });
+  app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_006.glb', (gltf) => {
+    rename('科技_工业建筑_006', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
+
+
+
+    for (let i = 2; i < 9;i++) {
+      const newMesh = copyMesh(gltf.scene)
+      rename(`科技_工业建筑_006_0${i}`,newMesh)
+      setParams(newMesh, 'position.x')
+      setParams(newMesh, 'position.y')
+      setParams(newMesh, 'position.z')
+      singChildAncestors(newMesh)
+      addInScene(newMesh)
+      if (i === 8) {
+      //  debuggerParams(newMesh)
+      }
+      app.ray?.push(newMesh)
+    }
+
+
+    // debuggerParams(gltf.scene)
+    if (app.params.raycasterBool) {
+      app.ray?.push(gltf.scene);
+    }
+  });
+  app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_004.glb', (gltf) => {
+    rename('科技_工业建筑_004', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
+
+
+    const mesh2 = copyMesh(gltf.scene)
+    rename('科技_工业建筑_004_02',mesh2)
+    setParams(mesh2, 'position.x')
+    setParams(mesh2, 'position.y')
+    setParams(mesh2, 'position.z')
+    singChildAncestors(mesh2)
+    addInScene(mesh2)
+
+    const mesh3 = copyMesh(gltf.scene)
+    rename('科技_工业建筑_004_03',mesh3)
+    setParams(mesh3, 'position.x')
+    setParams(mesh3, 'position.y')
+    setParams(mesh3, 'position.z')
+    singChildAncestors(mesh3)
+    addInScene(mesh3)
+
+    // debuggerParams(mesh2)
+    // debuggerParams(mesh3)
+    // debuggerParams(gltf.scene)
+
+  if (app.params.raycasterBool) {
+      app.ray?.push(gltf.scene);
+      app.ray?.push(mesh2);
+    }
+  });
+  app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_002.glb', (gltf) => {
+    rename('科技_工业建筑_002', gltf.scene)
     setParams(gltf.scene, 'position.x')
     setParams(gltf.scene, 'position.y')
     setParams(gltf.scene, 'position.z')
     singChildAncestors(gltf.scene)
     addInScene(gltf.scene)
 
-    debuggerParams(gltf.scene)
-    if (app.params.raycasterBool) {
+    for (let i = 2; i < 5; i++) {
+      const newMesh = copyMesh(gltf.scene)
+      rename(`科技_工业建筑_002_0${i}`,newMesh)
+      setParams(newMesh, 'position.x')
+      setParams(newMesh, 'position.y')
+      setParams(newMesh, 'position.z')
+      singChildAncestors(newMesh)
+      addInScene(newMesh)
+      app.ray?.push(newMesh);
+      // if (i === 3 || i === 4 || i === 2) {
+      //   debuggerParams(newMesh)
+      // }
+    }
+
+
+ // debuggerParams(gltf.scene)
+
+  if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene);
     }
   });

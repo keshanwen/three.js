@@ -98,7 +98,7 @@ class CreateThree implements CreateThreeInstanceType {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.params.width, this.params.height);
     // 0xb9d3ff   66d3c0
-    renderer.setClearColor(0x191970, 1); //设置背景颜色和透明度
+    // renderer.setClearColor(0x191970, 1); //设置背景颜色和透明度
     // renderer.outputEncoding = THREE.sRGBEncoding;
     return renderer;
   }

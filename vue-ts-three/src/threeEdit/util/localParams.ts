@@ -24,6 +24,9 @@ export function localParamsHook() {
         if (curIndex === array.length - 1) {
           return (accu[curValue] = value);
         }
+        if (!accu[curValue]) {
+          accu[curValue] = {}
+        }
         return accu[curValue];
       }, objs);
       localStorage.setItem(name, JSON.stringify(objs));
@@ -43,6 +46,17 @@ export function localParamsHook() {
   function setMeshParams(key: string, value: any, objs: THREE.Object3D) {
     key.split('.').reduce((accu: any, curValue, curIndex, array) => {
       if (curIndex === array.length - 1) {
+        // if (key.includes('rotation')) {
+        //   if (curValue === 'x') {
+        //     objs.rotateX(Math.PI * value / 360);
+        //   } else if (curValue === 'y') {
+        //     objs.rotateY((Math.PI * value) / 360);
+        //   } else if (curValue === 'z') {
+        //     objs.rotateZ((Math.PI * value) / 360);
+        //   }
+        // } else {
+        //   return (accu[curValue] = value);
+        // }
         return (accu[curValue] = value);
       }
       return accu[curValue];
@@ -53,7 +67,7 @@ export function localParamsHook() {
     let { name } = mesh;
     if (defineName) name = defineName
     const localValue = getLocal(name, key);
-    if (localValue) {
+    if (localValue || localValue === 0) {
       setMeshParams(key, localValue, mesh);
     }
   }
