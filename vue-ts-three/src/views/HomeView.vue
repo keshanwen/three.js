@@ -366,7 +366,7 @@ onMounted(() => {
     bottom: 30px;
     display: flex;
     font-size: 18px;
-    margin-left: calc(50% - 360px);
+    margin-left: calc(50% - 400px);
     .opeator-item {
       width: 130px;
       height: 48px;
