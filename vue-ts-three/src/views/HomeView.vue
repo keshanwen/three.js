@@ -325,12 +325,61 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="home-view-wrap"></div>
+  <div ref="containerRef" class="home-view-wrap">
+    <div class="title">
+      智慧工厂运营平台
+    </div>
+    <div class="opeator">
+      <div class="opeator-item active-item">动态总览</div>
+      <div class="opeator-item">安防管理</div>
+      <div class="opeator-item">设备管理</div>
+      <div class="opeator-item">能耗管理</div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="less">
 .home-view-wrap {
-  display: flex;
+ // display: flex;
+  position: relative;
   height: 100vh;
+  .title {
+    position: absolute;
+    color: white;
+    width: 100%;
+    text-align: center;
+    top: 20px;
+    font-size: 40px;
+    font-weight: normal;
+    font-family: cursive;
+    font-weight: bolder;
+    // border-bottom: 5px solid #ef852f;
+    // .title-border {
+    //   width: 40px;
+    //   height: 2px;
+    //    border-bottom: 5px solid #ef852f;
+    // }
+  }
+  .opeator {
+    color: white;
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    font-size: 18px;
+    margin-left: calc(50% - 360px);
+    .opeator-item {
+      width: 130px;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      flex: 1;
+      margin-left: 60px;
+      cursor: pointer;
+      background-color: rgba(50,50,50,1);
+    }
+    .active-item {
+      background-color:  #ef852f;
+    }
+  }
 }
 </style>
