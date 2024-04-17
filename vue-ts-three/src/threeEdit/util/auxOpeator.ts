@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { CreateThreeInstanceType } from '@/threeEdit/type/threeInstance'
-import { localParamsHook } from '@/threeEdit/localParams';
+import { localParamsHook } from '@/threeEdit/util/localParams';
 
 const { saveLocal } = localParamsHook();
 

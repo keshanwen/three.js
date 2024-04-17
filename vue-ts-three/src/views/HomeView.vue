@@ -4,8 +4,8 @@ import CreateThree from '@/threeEdit/createThreeInstance';
 import * as THREE from 'three';
 import { createTween } from '@/threeEdit/util/createBox';
 import TWEEN from '@tweenjs/tween.js';
-import { localParamsHook } from '@/threeEdit/localParams';
-import { auxOpeatorHook } from '@/threeEdit/auxOpeator'
+import { localParamsHook } from '@/threeEdit/util/localParams';
+import { auxOpeatorHook } from '@/threeEdit/util/auxOpeator'
 
 
 interface Position {
