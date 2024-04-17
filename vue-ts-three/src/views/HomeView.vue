@@ -39,6 +39,7 @@ const config: Config = {
 
 const containerRef = ref();
 const app = new CreateThree({
+  logPosTargetBool: true,
   helperBool: true
 });
 const { setParams } = localParamsHook()
@@ -51,6 +52,19 @@ const { rename,
 function initMode() {
   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_001.glb', (gltf) => {
     rename('科技_工业建筑_001', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    singChildAncestors(gltf.scene)
+    addInScene(gltf.scene)
+
+    debuggerParams(gltf.scene)
+    if (app.params.raycasterBool) {
+      app.ray?.push(gltf.scene);
+    }
+  });
+   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_003.glb', (gltf) => {
+    rename('科技_工业建筑_003', gltf.scene)
     setParams(gltf.scene, 'position.x')
     setParams(gltf.scene, 'position.y')
     setParams(gltf.scene, 'position.z')

@@ -17,6 +17,9 @@ import Helper from '@/threeEdit/helper';
 import EffectComposerInstance from '@/threeEdit/effectComposer'
 import Ray from '@/threeEdit/ray'
 import SecebLabelInstance from '@/threeEdit/sceneLabel'
+import { localParamsHook } from '@/threeEdit/util/localParams';
+
+const { saveLocal, setParams } = localParamsHook();
 
 class CreateThree implements CreateThreeInstanceType {
   params: CreateThreeInstanceParamsType;
@@ -76,7 +79,14 @@ class CreateThree implements CreateThreeInstanceType {
       3000
     );
 
-    camera.position.set(300, 150, 150);
+    camera.position.set(
+      77,
+      66,
+      327
+    );
+    setParams(camera, 'position.x','camera');
+    setParams(camera, 'position.y', 'camera');
+    setParams(camera, 'position.z', 'camera');
     return camera;
   }
   private initRender(): THREE.WebGLRenderer {
@@ -124,8 +134,12 @@ class CreateThree implements CreateThreeInstanceType {
     // 开发调试参数
     if (this.params.logPosTargetBool) {
       orbitControls.addEventListener('change', () => {
-        console.log('camera.position', this.camera.position);
-        console.log('orbitControls.target', this.orbitControls.target);
+        const { x,y,z } = this.camera.position
+        saveLocal('camera', 'position.x', x);
+        saveLocal('camera', 'position.y', y);
+        saveLocal('camera', 'position.z', z);
+        // console.log('camera.position', this.camera.position);
+        // console.log('orbitControls.target', this.orbitControls.target);
       });
     }
 

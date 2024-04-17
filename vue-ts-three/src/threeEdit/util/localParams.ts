@@ -49,8 +49,9 @@ export function localParamsHook() {
     }, objs);
   }
 
-  function setParams(mesh: THREE.Object3D, key: string) {
-    const { name } = mesh;
+  function setParams(mesh: THREE.Object3D, key: string, defineName?: string) {
+    let { name } = mesh;
+    if (defineName) name = defineName
     const localValue = getLocal(name, key);
     if (localValue) {
       setMeshParams(key, localValue, mesh);
