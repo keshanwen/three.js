@@ -123,21 +123,29 @@ class CreateThree implements CreateThreeInstanceType {
   }
   private initOrbitControls(): OrbitControls {
     // 相机控件
-    const orbitControls: OrbitControls = new OrbitControls(
+    let orbitControls: OrbitControls = new OrbitControls(
       this.camera,
       this.renderer.domElement
     );
     orbitControls.maxPolarAngle = Math.PI * 85 / 180;
     orbitControls.target.set(0, 0, 0);
+    setParams(orbitControls as any, 'target.x', 'orbitControls');
+    setParams(orbitControls as any, 'target.y', 'orbitControls');
+    setParams(orbitControls as any, 'target.z', 'orbitControls');
     orbitControls.update();
 
     // 开发调试参数
     if (this.params.logPosTargetBool) {
       orbitControls.addEventListener('change', () => {
-        const { x,y,z } = this.camera.position
+        const { x, y, z } = this.camera.position
+        const { x: tx, y: ty,z: tz } = this.orbitControls.target
         saveLocal('camera', 'position.x', x);
         saveLocal('camera', 'position.y', y);
         saveLocal('camera', 'position.z', z);
+        saveLocal('orbitControls', 'target.x', tx);
+        saveLocal('orbitControls', 'target.y', ty);
+        saveLocal('orbitControls', 'target.z', tz);
+
         // console.log('camera.position', this.camera.position);
         // console.log('orbitControls.target', this.orbitControls.target);
       });
