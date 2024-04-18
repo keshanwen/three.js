@@ -127,7 +127,7 @@ class CreateThree implements CreateThreeInstanceType {
       this.camera,
       this.renderer.domElement
     );
-    orbitControls.maxPolarAngle = Math.PI * 85 / 180;
+    orbitControls.maxPolarAngle = Math.PI * 75 / 180;
     orbitControls.target.set(0, 0, 0);
     setParams(orbitControls as any, 'target.x', 'orbitControls');
     setParams(orbitControls as any, 'target.y', 'orbitControls');

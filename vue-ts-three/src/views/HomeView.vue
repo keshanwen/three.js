@@ -7,8 +7,9 @@ import TWEEN from '@tweenjs/tween.js';
 import { localParamsHook } from '@/threeEdit/util/localParams';
 import { auxOpeatorHook } from '@/threeEdit/util/auxOpeator'
 import { setFloorHook } from '@/threeEdit/util/setScene'
-import { flowLightModel } from '@/threeEdit/util/setFlowLight'
+import {  model as flowLightModel } from '@/threeEdit/util/setFlowLight'
 import { dispose } from '@/threeEdit/util/clearCache'
+import { flowLightGroup } from '@/threeEdit/util/demo'
 
 
 interface Position {
@@ -356,8 +357,9 @@ function initScene() {
   const { gridHelp, mesh } = setFloorHook()
   app.scene.add(mesh)
  // app.scene.add(gridHelp)
-  // app.scene.add(flowLightModel)
+  app.scene.add(flowLightModel)
   // app.helper?.gui.addFolder()
+  app.scene.add(flowLightGroup)
 }
 
 
