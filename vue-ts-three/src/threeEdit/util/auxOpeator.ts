@@ -43,13 +43,13 @@ export function auxOpeatorHook(app: CreateThreeInstanceType) {
   function debuggerParams(mesh: THREE.Object3D) {
     const name = mesh.name;
     const dirLoad = app.helper?.gui.addFolder(`${name}`);
-    dirLoad?.add(mesh.position, 'x', -200, 200).onChange((value) => {
+    dirLoad?.add(mesh.position, 'x', -400, 400).step(1).onChange((value) => {
       saveLocal(name, 'position.x', value);
     }).name('posiotion x')
-    dirLoad?.add(mesh.position, 'y', -200, 200).onChange((value) => {
+    dirLoad?.add(mesh.position, 'y', -400, 400).step(1).onChange((value) => {
       saveLocal(name, 'position.y', value);
     }).name('posioton y')
-    dirLoad?.add(mesh.position, 'z', -200, 200).onChange((value) => {
+    dirLoad?.add(mesh.position, 'z', -400, 400).step(1).onChange((value) => {
       saveLocal(name, 'position.z', value);
     }).name('position z')
 
@@ -70,7 +70,8 @@ export function auxOpeatorHook(app: CreateThreeInstanceType) {
        .onChange((value) => {
         saveLocal(name, 'rotation.z', value);
        })
-       .name('旋转 z');
+      .name('旋转 z');
+       dirLoad?.close()
   }
 
   return {

@@ -56,8 +56,11 @@ export function localParamsHook() {
         //   }
         // } else {
         //   return (accu[curValue] = value);
-        // }
-        return (accu[curValue] = value);
+        // }'
+        if(value || value === 0) {
+          return (accu[curValue] = value);
+        }
+        return
       }
       return accu[curValue];
     }, objs);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import CreateThree from '@/threeEdit/createThreeInstance';
 import * as THREE from 'three';
 import { createTween } from '@/threeEdit/util/createBox';
@@ -7,6 +7,8 @@ import TWEEN from '@tweenjs/tween.js';
 import { localParamsHook } from '@/threeEdit/util/localParams';
 import { auxOpeatorHook } from '@/threeEdit/util/auxOpeator'
 import { setFloorHook } from '@/threeEdit/util/setScene'
+import { flowLightModel } from '@/threeEdit/util/setFlowLight'
+import { dispose } from '@/threeEdit/util/clearCache'
 
 
 interface Position {
@@ -39,7 +41,7 @@ const config: Config = {
 }
 
 const containerRef = ref();
-const app = new CreateThree({
+let app = new CreateThree({
   logPosTargetBool: true,
   helperBool: true
 });
@@ -219,6 +221,67 @@ function initMode() {
       app.ray?.push(gltf.scene);
     }
   });
+  app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_001.glb', (gltf) => {
+    rename('科技氛围建筑_001', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    addInScene(gltf.scene)
+
+  })
+  app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_002.glb', (gltf) => {
+    rename('科技氛围建筑_002', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    addInScene(gltf.scene)
+
+
+    const newMesh = copyMesh(gltf.scene)
+    rename(`科技氛围建筑_002_02`,newMesh)
+    setParams(newMesh, 'position.x')
+    setParams(newMesh, 'position.y')
+    setParams(newMesh, 'position.z')
+    addInScene(newMesh)
+  })
+  app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_003.glb', (gltf) => {
+    rename('科技氛围建筑_003', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    addInScene(gltf.scene)
+
+    const newMesh = copyMesh(gltf.scene)
+    rename(`科技氛围建筑_003_02`,newMesh)
+    setParams(newMesh, 'position.x')
+    setParams(newMesh, 'position.y')
+    setParams(newMesh, 'position.z')
+    addInScene(newMesh)
+
+  })
+  app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_005.glb', (gltf) => {
+    rename('科技氛围建筑_005', gltf.scene)
+    setParams(gltf.scene, 'position.x')
+    setParams(gltf.scene, 'position.y')
+    setParams(gltf.scene, 'position.z')
+    setParams(gltf.scene, 'rotation.x')
+    setParams(gltf.scene, 'rotation.y')
+    setParams(gltf.scene, 'rotation.z')
+    addInScene(gltf.scene)
+
+    const newMesh = copyMesh(gltf.scene)
+    rename(`科技氛围建筑_005_02`,newMesh)
+    setParams(newMesh, 'position.x')
+    setParams(newMesh, 'position.y')
+    setParams(newMesh, 'position.z')
+    setParams(newMesh, 'rotation.x')
+    setParams(newMesh, 'rotation.y')
+    setParams(newMesh, 'rotation.z')
+    addInScene(newMesh)
+  })
 }
 
 function initMesh() {
@@ -292,7 +355,9 @@ function initMesh() {
 function initScene() {
   const { gridHelp, mesh } = setFloorHook()
   app.scene.add(mesh)
-  app.scene.add(gridHelp)
+ // app.scene.add(gridHelp)
+  // app.scene.add(flowLightModel)
+  // app.helper?.gui.addFolder()
 }
 
 
@@ -331,6 +396,10 @@ function animaltionRun() {
 onMounted(() => {
   app.append(containerRef.value);
 });
+
+onUnmounted(() => {
+ dispose(app)
+})
 </script>
 
 <template>
