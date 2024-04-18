@@ -6,6 +6,7 @@ import { createTween } from '@/threeEdit/util/createBox';
 import TWEEN from '@tweenjs/tween.js';
 import { localParamsHook } from '@/threeEdit/util/localParams';
 import { auxOpeatorHook } from '@/threeEdit/util/auxOpeator'
+import { setFloorHook } from '@/threeEdit/util/setScene'
 
 
 interface Position {
@@ -288,7 +289,15 @@ function initMesh() {
   }
 }
 
+function initScene() {
+  const { gridHelp, mesh } = setFloorHook()
+  app.scene.add(mesh)
+  app.scene.add(gridHelp)
+}
+
+
 (function init() {
+  initScene()
   initMode();
  // initMesh();
 })();
