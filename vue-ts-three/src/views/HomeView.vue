@@ -227,7 +227,9 @@ function initMode() {
     setParams(gltf.scene, 'position.x')
     setParams(gltf.scene, 'position.y')
     setParams(gltf.scene, 'position.z')
+      // debuggerParams(gltf.scene)
     addInScene(gltf.scene)
+
 
   })
   app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_002.glb', (gltf) => {
@@ -235,6 +237,7 @@ function initMode() {
     setParams(gltf.scene, 'position.x')
     setParams(gltf.scene, 'position.y')
     setParams(gltf.scene, 'position.z')
+    // debuggerParams(gltf.scene)
     addInScene(gltf.scene)
 
 
@@ -356,8 +359,8 @@ function initMesh() {
 function initScene() {
   const { gridHelp, mesh } = setFloorHook()
   app.scene.add(mesh)
- // app.scene.add(gridHelp)
-  app.scene.add(flowLightModel)
+  // app.scene.add(gridHelp)
+ // app.scene.add(flowLightModel)
   // app.helper?.gui.addFolder()
   app.scene.add(flowLightGroup)
 }
