@@ -362,7 +362,7 @@ function initScene() {
   // app.scene.add(gridHelp)
  // app.scene.add(flowLightModel)
   // app.helper?.gui.addFolder()
-  app.scene.add(flowLightGroup)
+   app.scene.add(flowLightGroup)
 }
 
 

@@ -38,6 +38,7 @@ class CreateThree implements CreateThreeInstanceType {
   constructor(params: Partial<CreateThreeInstanceParamsType> = {}) {
     this.params = this.initParams(params);
     this.scene = new THREE.Scene();
+    this.setFog(this.scene)
     this.camera = this.initCamera();
     this.renderer = this.initRender();
     this.GLTFLoader = this.initGLTFLoader();
@@ -211,6 +212,9 @@ class CreateThree implements CreateThreeInstanceType {
       this.renderer.render(this.scene, this.camera);
     }
     window.requestAnimationFrame(() => this.render());
+  }
+  setFog(scene: THREE.Scene) {
+    scene.fog = new THREE.Fog(0xffffff, 0.1, 3000);
   }
   append(parent: HTMLElement): void {
     parent.appendChild(this.renderer.domElement);
