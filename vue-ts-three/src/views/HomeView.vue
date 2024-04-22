@@ -41,6 +41,7 @@ const config: Config = {
   ]
 }
 
+let activeOpeator = ref(1)
 const containerRef = ref();
 let app = new CreateThree({
   logPosTargetBool: true,
@@ -398,6 +399,78 @@ function animaltionRun() {
 }
 // animaltionRun();
 
+
+const opeatorClick = (value: number) => {
+  activeOpeator.value = value
+
+
+  /*
+    2 的视角
+      camera.position
+        x
+        :
+        -59.501022560539425
+        y
+        :
+        57.61790182641387
+        z
+        :
+        103.19530043686964
+    orbitControls.target
+      x
+      :
+      25.830574608167666
+      y
+      :
+      -19.148895678938896
+      z
+      :
+      19.103891259651977
+
+
+  */
+  if (value === 2) {
+   const tween = new TWEEN.Tween({
+            // 相机开始坐标
+            x: app.camera.position.x,
+            y: app.camera.position.y,
+            z: app.camera.position.z,
+            // 相机开始指向的目标观察点
+            tx: app.orbitControls.target.x,
+            ty: app.orbitControls.target.y,
+            tz: app.orbitControls.target.z,
+        })
+        .to({
+            // 相机结束坐标
+            x:  -59.501022560539425,
+            y:  57.61790182641387,
+            z:  103.19530043686964,
+            // 相机结束指向的目标观察点
+            tx: 25.830574608167666,
+            ty: -19.148895678938896,
+            tz: 19.103891259651977,
+        }, 2000)
+        .onUpdate(function (obj) {
+          // 动态改变相机位置
+          app.camera.position.set(obj.x, obj.y, obj.z);
+          // 动态计算相机视线
+          // app.camera.lookAt(obj.tx, obj.ty, obj.tz);
+          app.orbitControls.target.set(obj.tx, obj.ty, obj.tz)
+          app.orbitControls.update() // 内部执行 lookAT()
+        })
+      .start()
+
+
+      function loop() {
+        tween.update();
+        console.log('loop');
+        window.requestAnimationFrame(loop);
+      }
+
+     loop()
+  }
+}
+
 onMounted(() => {
   app.append(containerRef.value);
 });
@@ -413,10 +486,10 @@ onUnmounted(() => {
       智慧工厂运营平台
     </div>
     <div class="opeator">
-      <div class="opeator-item active-item">动态总览</div>
-      <div class="opeator-item">安防管理</div>
-      <div class="opeator-item">设备管理</div>
-      <div class="opeator-item">能耗管理</div>
+      <div :class="[ activeOpeator === 1 ? 'active-item' : '', 'opeator-item']" @click="() => opeatorClick(1)">动态总览</div>
+      <div :class="[ activeOpeator === 2 ? 'active-item' : '', 'opeator-item']"  @click="() => opeatorClick(2)">安防管理</div>
+      <div :class="[ activeOpeator === 3 ? 'active-item' : '', 'opeator-item']"  @click="() => opeatorClick(3)">设备管理</div>
+      <div :class="[ activeOpeator === 4 ? 'active-item' : '', 'opeator-item']"  @click="() => opeatorClick(4)">能耗管理</div>
     </div>
   </div>
 </template>
