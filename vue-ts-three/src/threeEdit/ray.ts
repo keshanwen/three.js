@@ -5,6 +5,7 @@ import type {
 } from '@/threeEdit/type/threeInstance';
 import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
 import { createSprite, createCanvasSprite } from '@/threeEdit/util/createBox';
+import { createBox } from '@/threeEdit/util/createBox';
 
 
 export default class Ray implements RayInstanceType {
@@ -45,6 +46,7 @@ export default class Ray implements RayInstanceType {
       // console.log("射线器返回的对象", intersects);
       // intersects.length大于0说明，说明选中了模型
       console.log('点中的对象', intersects);
+
       if (intersects.length > 0) {
         if (this.tag?.parent) {
           this.tag.parent.remove(this.tag)
@@ -52,34 +54,59 @@ export default class Ray implements RayInstanceType {
         let ancestors: string = (intersects[0].object as Object3DHanlde)
           .ancestors;
         this.chooseObj = app.scene.getObjectByName(ancestors) as Object3DHanlde;
+        console.log(this.chooseObj, 'chooseObj~~~~~~~~~~~~~~~~~')
         if (app.params.effectComposerBool && this.chooseObj) {
-          app.effectComposer!.outlinePass.selectedObjects = [this.chooseObj];
+         // app.effectComposer!.outlinePass.selectedObjects = [this.chooseObj];
         }
         if (app.params.transformControlsBool && this.chooseObj) {
-          app.transformControls?.attach(this.chooseObj);
+          // app.transformControls?.attach(this.chooseObj);
         }
         if (app.params.sceneLabelBool && this.chooseObj) {
 
           if (ancestors === '球') {
-            this.tag = createSprite(this.chooseObj)
+           this.tag = createSprite(this.chooseObj)
             // this.tag = createCanvasSprite(this.chooseObj,'你好世界')
           } else {
-               this.tag = app.sceneLabel!.createShowTag(
-                 ancestors,
-                 this.chooseObj,
-                 app
-               );
+              //  this.tag = app.sceneLabel!.createShowTag(
+              //    ancestors,
+              //    this.chooseObj,
+              //    app
+            //  );
+            this.tag = app.sceneLabel!.cretateShowTagComponent(app)
           }
 
-          this.chooseObj.add(this.tag);
+          // this.chooseObj.add(this.tag);
+          const position = this.confirmTagPosition(this.chooseObj)
+          const { x, y, z } = position
+          const COUNT = 12
+          this.tag.position.set(x + COUNT, y + COUNT, z + COUNT)
+
+          // this.tag.translateX(30)
+          app.scene.add(this.tag)
+
         }
       } else {
         if (this.chooseObj) {
-          app.effectComposer!.outlinePass.selectedObjects = [];
-          if (this.tag) this.chooseObj.remove(this.tag)
+          // app.effectComposer!.outlinePass.selectedObjects = [];
+          if (this.tag) {
+            //  this.tag.parent.remove(this.tag);
+            app.scene.remove(this.tag)
+          }
         }
       }
     });
+  }
+
+  confirmTagPosition(chooseObj: THREE.Object3D) {
+    const { size } = createBox(chooseObj)
+    const { y: height } = size
+    const { x, y, z } = chooseObj.position
+
+    return {
+      x,
+      y: height + y,
+      z,
+    }
   }
 
   push(object: THREE.Object3D): void {

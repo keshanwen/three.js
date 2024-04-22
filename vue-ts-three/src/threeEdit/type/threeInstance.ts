@@ -87,4 +87,5 @@ export interface SceneLableInstanceType {
     mesh: Object3DHanlde,
     app: CreateThreeInstanceType
   ): Object3D;
+  cretateShowTagComponent(app: CreateThreeInstanceType): Object3D;
 }

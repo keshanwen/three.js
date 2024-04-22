@@ -68,9 +68,9 @@ function initMode() {
     addInScene(gltf.scene)
 
       // debuggerParams(gltf.scene)
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-    }
+    // if (app.params.raycasterBool) {
+    //   app.ray?.push(gltf.scene);
+    // }
   });
    app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_005.glb', (gltf) => {
     rename('科技_工业建筑_005', gltf.scene)
@@ -85,9 +85,9 @@ function initMode() {
 
     // debuggerParams(gltf.scene)
     console.log(gltf.scene.rotation)
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-    }
+    // if (app.params.raycasterBool) {
+    //   app.ray?.push(gltf.scene);
+    // }
    });
   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_003.glb', (gltf) => {
     rename('科技_工业建筑_003', gltf.scene)
@@ -119,11 +119,11 @@ function initMode() {
 
     // debuggerParams(mesh3)
 
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-      app.ray?.push(mesh2);
-      app.ray?.push(mesh3);
-    }
+    // if (app.params.raycasterBool) {
+    //   app.ray?.push(gltf.scene);
+    //   app.ray?.push(mesh2);
+    //   app.ray?.push(mesh3);
+    // }
   });
   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_006.glb', (gltf) => {
     rename('科技_工业建筑_006', gltf.scene)
@@ -149,7 +149,7 @@ function initMode() {
       if (i === 8) {
       //  debuggerParams(newMesh)
       }
-      app.ray?.push(newMesh)
+     // app.ray?.push(newMesh)
     }
 
     // const coneMesh = insertConeMesh('科技_工业建筑_006_04', app)
@@ -160,9 +160,9 @@ function initMode() {
 
 
     // debuggerParams(gltf.scene)
-    if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-    }
+    // if (app.params.raycasterBool) {
+    //   app.ray?.push(gltf.scene);
+    // }
   });
   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_004.glb', (gltf) => {
     rename('科技_工业建筑_004', gltf.scene)
@@ -196,10 +196,10 @@ function initMode() {
     // debuggerParams(mesh3)
     // debuggerParams(gltf.scene)
 
-  if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-      app.ray?.push(mesh2);
-    }
+  // if (app.params.raycasterBool) {
+  //     app.ray?.push(gltf.scene);
+  //     app.ray?.push(mesh2);
+  //   }
   });
   app.GLTFLoader.load('http://localhost:1234/finv/科技_工业建筑_002.glb', (gltf) => {
     rename('科技_工业建筑_002', gltf.scene)
@@ -217,7 +217,7 @@ function initMode() {
       setParams(newMesh, 'position.z')
       singChildAncestors(newMesh)
       addInScene(newMesh)
-      app.ray?.push(newMesh);
+      // app.ray?.push(newMesh);
       // if (i === 3 || i === 4 || i === 2) {
       //   debuggerParams(newMesh)
       // }
@@ -226,9 +226,9 @@ function initMode() {
 
  // debuggerParams(gltf.scene)
 
-  if (app.params.raycasterBool) {
-      app.ray?.push(gltf.scene);
-    }
+  // if (app.params.raycasterBool) {
+  //     app.ray?.push(gltf.scene);
+  //   }
   });
   app.GLTFLoader.load('http://localhost:1234/finv/科技氛围建筑_001.glb', (gltf) => {
     rename('科技氛围建筑_001', gltf.scene)
@@ -396,7 +396,7 @@ function animaltionRun() {
 
   function loop() {
     tween.update();
-    console.log('loop');
+    // console.log('loop');
     window.requestAnimationFrame(loop);
   }
 
@@ -467,12 +467,29 @@ const opeatorClick = (value: number) => {
         })
      .start()
      .onComplete(() => {
-          const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
-          app.scene.add(coneMesh)
+       const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
+       coneMesh.name = '科技_工业建筑_003_03_label'
+       coneMesh.ancestors = '科技_工业建筑_003_03_label'
+       coneMesh.traverse((obj: any) => {
+         if (obj.isMesh) {
+          obj.ancestors = '科技_工业建筑_003_03_label'
+         }
+       })
+        app.ray?.push(coneMesh)
+       app.scene.add(coneMesh)
+
           const showTag = createShowTag('1号楼正常', coneMesh, app)
           app.scene.add(showTag)
 
-           const coneMesh2 = insertConeMesh('科技_工业建筑_006_04', app)
+       const coneMesh2 = insertConeMesh('科技_工业建筑_006_04', app)
+          coneMesh2.name = '科技_工业建筑_006_04_label'
+       coneMesh2.ancestors = '科技_工业建筑_006_04_label'
+          coneMesh2.traverse((obj: any) => {
+         if (obj.isMesh) {
+          obj.ancestors = '科技_工业建筑_006_04_label'
+         }
+       })
+          app.ray?.push(coneMesh2)
           app.scene.add(coneMesh2)
 
           const showTag2 = createShowTag('2号楼正常', coneMesh2, app)
@@ -484,7 +501,7 @@ const opeatorClick = (value: number) => {
 
       function loop() {
         tween.update();
-        console.log('loop');
+        // console.log('loop');
         window.requestAnimationFrame(loop);
       }
 
@@ -503,6 +520,7 @@ onUnmounted(() => {
 
 <template>
   <div ref="containerRef" class="home-view-wrap">
+
     <div class="title">
       智慧工厂运营平台
     </div>

@@ -11,7 +11,9 @@ import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
 import type { Object3D } from 'three';
 import { createBox } from '@/threeEdit/util/createBox';
 // 引入CSS3渲染器CSS3DRenderer
-import {CSS3DObject, CSS3DRenderer} from 'three/addons/renderers/CSS3DRenderer.js';
+import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
+import Tip from '@/threeEdit/components/tip.vue'
+import { createVNode, render,defineAsyncComponent } from 'vue'
 
 
 export default class SecebLabelInstance implements SceneLableInstanceType {
@@ -99,5 +101,21 @@ export default class SecebLabelInstance implements SceneLableInstanceType {
     tag.position.z = tz
 
     return tag;
+  }
+
+  cretateShowTagComponent( app: CreateThreeInstanceType, options?: any): Object3D {
+    let el = document.createElement('div')
+    let vm = createVNode(Tip, options)
+    render(vm, el)
+
+      // HTML元素转化为threejs的CSS2模型对象
+    let tag: CSS2DObject | CSS3DObject;
+    if (app.params.CSS3DRenderer) {
+      tag = new CSS3DObject(el);
+    } else {
+      tag = new CSS2DObject(el);
+    }
+
+    return tag
   }
 }
