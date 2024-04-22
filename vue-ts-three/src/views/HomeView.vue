@@ -459,6 +459,7 @@ const opeatorClick = (value: number) => {
           app.orbitControls.update() // 内部执行 lookAT()
         })
       .start()
+      .easing(TWEEN.Easing.Sinusoidal.InOut); //使用二次缓动函数
 
 
       function loop() {
