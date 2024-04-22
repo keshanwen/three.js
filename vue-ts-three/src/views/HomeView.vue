@@ -119,11 +119,6 @@ function initMode() {
 
     // debuggerParams(mesh3)
 
-    const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
-    app.scene.add(coneMesh)
-    const showTag = createShowTag('1号楼正常', coneMesh, app)
-    app.scene.add(showTag)
-
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene);
       app.ray?.push(mesh2);
@@ -470,7 +465,20 @@ const opeatorClick = (value: number) => {
           app.orbitControls.target.set(obj.tx, obj.ty, obj.tz)
           app.orbitControls.update() // 内部执行 lookAT()
         })
-      .start()
+     .start()
+     .onComplete(() => {
+          const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
+          app.scene.add(coneMesh)
+          const showTag = createShowTag('1号楼正常', coneMesh, app)
+          app.scene.add(showTag)
+
+           const coneMesh2 = insertConeMesh('科技_工业建筑_006_04', app)
+          app.scene.add(coneMesh2)
+
+          const showTag2 = createShowTag('2号楼正常', coneMesh2, app)
+          app.scene.add(showTag2)
+
+     })
       .easing(TWEEN.Easing.Sinusoidal.InOut); //使用二次缓动函数
 
 
