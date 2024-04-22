@@ -10,6 +10,7 @@ import { setFloorHook } from '@/threeEdit/util/setScene'
 import {  model as flowLightModel } from '@/threeEdit/util/setFlowLight'
 import { dispose } from '@/threeEdit/util/clearCache'
 import { flowLightGroup } from '@/threeEdit/util/demo'
+import { insertConeMesh } from '@/threeEdit/util/coneMesh'
 
 
 interface Position {
@@ -116,6 +117,8 @@ function initMode() {
 
     // debuggerParams(mesh3)
 
+    // const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
+    // app.scene.add(coneMesh)
 
 
     if (app.params.raycasterBool) {
@@ -150,6 +153,9 @@ function initMode() {
       }
       app.ray?.push(newMesh)
     }
+
+    // const coneMesh = insertConeMesh('科技_工业建筑_006_04', app)
+    // app.scene.add(coneMesh)
 
 
     // debuggerParams(gltf.scene)
@@ -363,7 +369,7 @@ function initScene() {
   // app.scene.add(gridHelp)
  // app.scene.add(flowLightModel)
   // app.helper?.gui.addFolder()
-   app.scene.add(flowLightGroup)
+  app.scene.add(flowLightGroup)
 }
 
 
