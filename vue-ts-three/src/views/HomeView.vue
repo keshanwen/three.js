@@ -10,7 +10,7 @@ import { setFloorHook } from '@/threeEdit/util/setScene'
 import {  model as flowLightModel } from '@/threeEdit/util/setFlowLight'
 import { dispose } from '@/threeEdit/util/clearCache'
 import { flowLightGroup } from '@/threeEdit/util/demo'
-import { insertConeMesh } from '@/threeEdit/util/coneMesh'
+import { insertConeMesh, createShowTag } from '@/threeEdit/util/coneMesh'
 
 
 interface Position {
@@ -46,7 +46,9 @@ let activeOpeator = ref(1)
 const containerRef = ref();
 let app = new CreateThree({
   logPosTargetBool: true,
-  helperBool: true
+  helperBool: true,
+  raycasterBool: true,
+  sceneLabelBool: true,
 });
 const { setParams } = localParamsHook()
 const { rename,
@@ -117,9 +119,10 @@ function initMode() {
 
     // debuggerParams(mesh3)
 
-    // const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
-    // app.scene.add(coneMesh)
-
+    const coneMesh = insertConeMesh('科技_工业建筑_003_03', app)
+    app.scene.add(coneMesh)
+    const showTag = createShowTag('1号楼正常', coneMesh, app)
+    app.scene.add(showTag)
 
     if (app.params.raycasterBool) {
       app.ray?.push(gltf.scene);
@@ -156,6 +159,9 @@ function initMode() {
 
     // const coneMesh = insertConeMesh('科技_工业建筑_006_04', app)
     // app.scene.add(coneMesh)
+
+    // const showTag = createShowTag('2号楼正常', coneMesh, app)
+    // app.scene.add(showTag)
 
 
     // debuggerParams(gltf.scene)

@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import type CreateThree from '@/threeEdit/createThreeInstance';
 import { createWaveMesh } from '@/threeEdit/util/waveMesh';
 import { createBox } from '@/threeEdit/util/createBox';
+import type { Object3DHanlde } from '@/threeEdit/type/threeInstance';
+import type {
+  CreateThreeInstanceType,
+} from '@/threeEdit/type/threeInstance';
 
 
 // size:控制整体大小
@@ -56,4 +60,13 @@ function insertConeMesh(name: string, app: CreateThree) {
   return coneMesh
 }
 
-export { createConeMesh, insertConeMesh };
+
+function createShowTag(
+  content: string,
+  mesh: Object3DHanlde,
+  app: CreateThreeInstanceType
+) {
+  return app.sceneLabel?.createShowTag(content,mesh,app)
+}
+
+export { createConeMesh, insertConeMesh, createShowTag };

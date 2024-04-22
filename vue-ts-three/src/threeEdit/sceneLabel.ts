@@ -67,10 +67,13 @@ export default class SecebLabelInstance implements SceneLableInstanceType {
     // 创建 html 元素
     const div = document.createElement('div');
     div.innerHTML = `${content}`;
+    div.style.fontSize = '16px'
     div.style.padding = '10px';
     div.style.color = '#fff';
-    div.style.backgroundColor = 'rgba(25,25,25,0.5)';
+    div.style.backgroundColor = 'rgba(0,0,0,0.4)';
     div.style.borderRadius = '5px';
+
+    div.classList.add('tag');
 
     // HTML元素转化为threejs的CSS2模型对象
     let tag: CSS2DObject | CSS3DObject;
@@ -83,7 +86,8 @@ export default class SecebLabelInstance implements SceneLableInstanceType {
 
     // app.scene.add(tag)
     const { size, center } = createBox(mesh);
-    const OFFSET = 10;
+    const { x: tx, y: ty, z:tz } = mesh.position
+    const OFFSET = 8;
     // 简单的判断
     if (center.y == 0) {
       tag.position.y = size.y / 2 + OFFSET;
@@ -91,6 +95,8 @@ export default class SecebLabelInstance implements SceneLableInstanceType {
       tag.position.y = size.y + OFFSET;
     }
     // tag.position.y = size.y - center.y;
+    tag.position.x = tx
+    tag.position.z = tz
 
     return tag;
   }
