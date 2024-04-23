@@ -84,7 +84,6 @@ function initMode() {
     addInScene(gltf.scene)
 
     // debuggerParams(gltf.scene)
-    console.log(gltf.scene.rotation)
     // if (app.params.raycasterBool) {
     //   app.ray?.push(gltf.scene);
     // }
@@ -356,7 +355,6 @@ function initMesh() {
 
   //  test(mesh)
   // test(mesh2)
-  console.log(mesh2.position);
   if (app.params.raycasterBool) {
     app.ray!.push(mesh);
     app.ray!.push(mesh3);
