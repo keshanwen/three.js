@@ -9,7 +9,7 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { Video } from '@nutui/nutui'
+// import { Video } from '@nutui/nutui'
 
 import { ref } from 'vue'
 const source = ref({
