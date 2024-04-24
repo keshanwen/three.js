@@ -77,8 +77,8 @@ export default class Ray implements RayInstanceType {
 
           // this.chooseObj.add(this.tag);
           const position = this.confirmTagPosition(this.chooseObj)
-          const { x, y, z } = position
-          const COUNT = 12
+          const { x,y,z } = position
+          const COUNT = 0
           this.tag.position.set(x + COUNT, y + COUNT, z + COUNT)
 
           // this.tag.translateX(30)
