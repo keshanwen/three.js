@@ -1,10 +1,26 @@
 <template>
     <div class='tip-home'>
+       <!-- <nut-cell>
+    <nut-video :source="source" :options="options" />
+  </nut-cell> -->
+    <!-- <Button type="primary">Primary</Button> -->
+      <!-- <Video :source="source" :options="options" /> -->
       hello wrold
     </div>
 </template>
 <script setup lang='ts'>
+import { Video } from '@nutui/nutui'
 
+import { ref } from 'vue'
+const source = ref({
+  src: 'https://storage.360buyimg.com/nutui/video/video_NutUI.mp4',
+  type: 'video/mp4'
+})
+const options = ref({
+  autoplay: true,
+  muted: true,
+  controls: true
+})
 </script>
 
 
