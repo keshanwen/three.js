@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
+// import Stats from 'three/examples/jsm/libs/stats.module.js';
+import Stats from '@/threeEdit/util/stats.js';
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import type {
   HelperInstanceType,

@@ -9,15 +9,17 @@ import CreateThree from '@/threeEdit/createThreeInstance';
 import * as THREE from 'three';
 import { setFloorHook } from '@/threeEdit/util/setScene'
 import { model } from '@/threeEdit/util/flyLine'
+import { mesh } from '@/study/stats'
 
 let containerRef = ref()
 let app = new CreateThree({
-  helperBool: true,
-  logPosTargetBool: true
+  helperBool: true
 });
 
   // const { gridHelp, mesh } = setFloorHook()
-  // app.scene.add(model)
+// app.scene.add(model)
+app.scene.add(mesh)
+
 
 onMounted(() => {
   app.append(containerRef.value);
