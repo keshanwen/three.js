@@ -20,6 +20,7 @@
   void main() {
     //两个旋转矩阵、顶点齐次坐标连乘
     gl_Position = mx*my*a_Position;
+    // gl_Position = a_Position;
     //纹理坐标插值计算
     v_TexCoord = a_TexCoord;
   }

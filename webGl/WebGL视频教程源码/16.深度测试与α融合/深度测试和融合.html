@@ -136,8 +136,9 @@
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
     /**执行绘制命令**/
+
     gl.drawArrays(gl.TRIANGLES,36,36);//先绘制不透明的立方体
-    gl.drawArrays(gl.TRIANGLES,0,36);//后绘制透明的立方体
+    gl.drawArrays(gl.TRIANGLES, 0, 36);//后绘制透明的立方体
 
 
     /**
